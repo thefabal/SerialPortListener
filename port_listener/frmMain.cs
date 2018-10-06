@@ -100,6 +100,12 @@ namespace port_listener {
 
             serialport.Open();
 
+            cbAuto.Enabled = false;
+            cbPortName.Enabled = false;
+            cbBaudRate.Enabled = false;
+            cbDataBit.Enabled = false;
+            cbParity.Enabled = false;
+            cbStopBit.Enabled = false;
             btnListen.Enabled = false;
             btnStop.Enabled = true;
         }
@@ -107,6 +113,12 @@ namespace port_listener {
         private void btnStop_Click( object sender, EventArgs e ) {
             serialport.Close();
 
+            cbAuto.Enabled = true;
+            cbPortName.Enabled = true;
+            cbBaudRate.Enabled = true;
+            cbDataBit.Enabled = true;
+            cbParity.Enabled = true;
+            cbStopBit.Enabled = true;
             btnListen.Enabled = true;
             btnStop.Enabled = false;
         }
