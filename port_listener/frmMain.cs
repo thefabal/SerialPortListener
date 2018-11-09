@@ -35,6 +35,10 @@ namespace port_listener {
                 cbDataBit.Enabled = false;
                 cbParity.Enabled = false;
                 cbStopBit.Enabled = false;
+                rbDTROff.Enabled = false;
+                rbDTROn.Enabled = false;
+                rbRTSOff.Enabled = false;
+                rbRTSOn.Enabled = false;
             } else {
                 cbPortName.SelectedIndex = 0;
             }
@@ -53,12 +57,20 @@ namespace port_listener {
                 cbDataBit.Enabled = false;
                 cbParity.Enabled = false;
                 cbStopBit.Enabled = false;
+                rbDTROff.Enabled = false;
+                rbDTROn.Enabled = false;
+                rbRTSOff.Enabled = false;
+                rbRTSOn.Enabled = false;
             } else {
                 btnListen.Enabled = true;
                 cbBaudRate.Enabled = true;
                 cbDataBit.Enabled = true;
                 cbParity.Enabled = true;
                 cbStopBit.Enabled = true;
+                rbDTROff.Enabled = true;
+                rbDTROn.Enabled = true;
+                rbRTSOff.Enabled = true;
+                rbRTSOn.Enabled = true;
             }
         }
 
@@ -69,14 +81,14 @@ namespace port_listener {
                 return;
             }
 
-            serialport = new SerialPort();
-
-            serialport.PortName = ( (serial_port)cbPortName.SelectedItem ).port_id;
-            serialport.BaudRate = Convert.ToInt32( cbBaudRate.SelectedItem );
-            serialport.DataBits = Convert.ToInt32( cbDataBit.SelectedItem );
-            serialport.Handshake = Handshake.None;
-            serialport.RtsEnable = false;
-            serialport.DtrEnable = false;
+            serialport = new SerialPort {
+                PortName = ( (serial_port)cbPortName.SelectedItem ).port_id,
+                BaudRate = Convert.ToInt32( cbBaudRate.SelectedItem ),
+                DataBits = Convert.ToInt32( cbDataBit.SelectedItem ),
+                Handshake = Handshake.None,
+                RtsEnable = false,
+                DtrEnable = false
+            };
 
             switch ( cbParity.SelectedIndex ) {
                 case 0: serialport.Parity = Parity.None; break;
@@ -93,6 +105,9 @@ namespace port_listener {
                 case 3: serialport.StopBits = StopBits.OnePointFive; break;
             }
 
+            serialport.DtrEnable = ( rbDTROn.Checked ) ? ( true ) : ( false );
+            serialport.RtsEnable = ( rbRTSOn.Checked ) ? ( true ) : ( false );
+
             serialport.ReadTimeout = 500;
             serialport.WriteTimeout = 500;
 
@@ -108,6 +123,10 @@ namespace port_listener {
             cbStopBit.Enabled = false;
             btnListen.Enabled = false;
             btnStop.Enabled = true;
+            rbDTROff.Enabled = false;
+            rbDTROn.Enabled = false;
+            rbRTSOff.Enabled = false;
+            rbRTSOn.Enabled = false;
         }
 
         private void btnStop_Click( object sender, EventArgs e ) {
@@ -121,6 +140,10 @@ namespace port_listener {
             cbStopBit.Enabled = true;
             btnListen.Enabled = true;
             btnStop.Enabled = false;
+            rbDTROff.Enabled = true;
+            rbDTROn.Enabled = true;
+            rbRTSOff.Enabled = true;
+            rbRTSOn.Enabled = true;
         }
 
         private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e ) {
