@@ -29,6 +29,12 @@
             this.cbAuto = new System.Windows.Forms.CheckBox();
             this.btnListen = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.gbRTS = new System.Windows.Forms.GroupBox();
+            this.rbRTSOff = new System.Windows.Forms.RadioButton();
+            this.rbRTSOn = new System.Windows.Forms.RadioButton();
+            this.gbDTR = new System.Windows.Forms.GroupBox();
+            this.rbDTROff = new System.Windows.Forms.RadioButton();
+            this.rbDTROn = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
             this.cbPortName = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -39,18 +45,20 @@
             this.cbParity = new System.Windows.Forms.ComboBox();
             this.cbDataBit = new System.Windows.Forms.ComboBox();
             this.cbBaudRate = new System.Windows.Forms.ComboBox();
+            this.gbDisplayAs = new System.Windows.Forms.GroupBox();
+            this.rbDisplayHex = new System.Windows.Forms.RadioButton();
+            this.rbDisplayDecimal = new System.Windows.Forms.RadioButton();
+            this.rbDisplayBinary = new System.Windows.Forms.RadioButton();
+            this.rbDisplayString = new System.Windows.Forms.RadioButton();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.rtbData = new System.Windows.Forms.RichTextBox();
             this.btnClear = new System.Windows.Forms.Button();
-            this.gbDTR = new System.Windows.Forms.GroupBox();
-            this.rbDTROff = new System.Windows.Forms.RadioButton();
-            this.rbDTROn = new System.Windows.Forms.RadioButton();
-            this.gbRTS = new System.Windows.Forms.GroupBox();
-            this.rbRTSOff = new System.Windows.Forms.RadioButton();
-            this.rbRTSOn = new System.Windows.Forms.RadioButton();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.gbDTR.SuspendLayout();
             this.gbRTS.SuspendLayout();
+            this.gbDTR.SuspendLayout();
+            this.gbDisplayAs.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // label9
@@ -128,6 +136,76 @@
             this.groupBox1.TabIndex = 44;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Serial Port Settings";
+            // 
+            // gbRTS
+            // 
+            this.gbRTS.Controls.Add(this.rbRTSOff);
+            this.gbRTS.Controls.Add(this.rbRTSOn);
+            this.gbRTS.Location = new System.Drawing.Point(4, 306);
+            this.gbRTS.Name = "gbRTS";
+            this.gbRTS.Size = new System.Drawing.Size(130, 44);
+            this.gbRTS.TabIndex = 11;
+            this.gbRTS.TabStop = false;
+            this.gbRTS.Text = "RTS";
+            // 
+            // rbRTSOff
+            // 
+            this.rbRTSOff.AutoSize = true;
+            this.rbRTSOff.ForeColor = System.Drawing.Color.Black;
+            this.rbRTSOff.Location = new System.Drawing.Point(55, 19);
+            this.rbRTSOff.Name = "rbRTSOff";
+            this.rbRTSOff.Size = new System.Drawing.Size(39, 17);
+            this.rbRTSOff.TabIndex = 108;
+            this.rbRTSOff.Text = "Off";
+            this.rbRTSOff.UseVisualStyleBackColor = true;
+            // 
+            // rbRTSOn
+            // 
+            this.rbRTSOn.AutoSize = true;
+            this.rbRTSOn.Checked = true;
+            this.rbRTSOn.ForeColor = System.Drawing.Color.Black;
+            this.rbRTSOn.Location = new System.Drawing.Point(9, 19);
+            this.rbRTSOn.Name = "rbRTSOn";
+            this.rbRTSOn.Size = new System.Drawing.Size(39, 17);
+            this.rbRTSOn.TabIndex = 107;
+            this.rbRTSOn.TabStop = true;
+            this.rbRTSOn.Text = "On";
+            this.rbRTSOn.UseVisualStyleBackColor = true;
+            // 
+            // gbDTR
+            // 
+            this.gbDTR.Controls.Add(this.rbDTROff);
+            this.gbDTR.Controls.Add(this.rbDTROn);
+            this.gbDTR.Location = new System.Drawing.Point(4, 258);
+            this.gbDTR.Name = "gbDTR";
+            this.gbDTR.Size = new System.Drawing.Size(130, 44);
+            this.gbDTR.TabIndex = 10;
+            this.gbDTR.TabStop = false;
+            this.gbDTR.Text = "DTR";
+            // 
+            // rbDTROff
+            // 
+            this.rbDTROff.AutoSize = true;
+            this.rbDTROff.ForeColor = System.Drawing.Color.Black;
+            this.rbDTROff.Location = new System.Drawing.Point(55, 19);
+            this.rbDTROff.Name = "rbDTROff";
+            this.rbDTROff.Size = new System.Drawing.Size(39, 17);
+            this.rbDTROff.TabIndex = 108;
+            this.rbDTROff.Text = "Off";
+            this.rbDTROff.UseVisualStyleBackColor = true;
+            // 
+            // rbDTROn
+            // 
+            this.rbDTROn.AutoSize = true;
+            this.rbDTROn.Checked = true;
+            this.rbDTROn.ForeColor = System.Drawing.Color.Black;
+            this.rbDTROn.Location = new System.Drawing.Point(9, 19);
+            this.rbDTROn.Name = "rbDTROn";
+            this.rbDTROn.Size = new System.Drawing.Size(39, 17);
+            this.rbDTROn.TabIndex = 107;
+            this.rbDTROn.TabStop = true;
+            this.rbDTROn.Text = "On";
+            this.rbDTROn.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
@@ -252,108 +330,106 @@
             this.cbBaudRate.Size = new System.Drawing.Size(121, 21);
             this.cbBaudRate.TabIndex = 6;
             // 
+            // gbDisplayAs
+            // 
+            this.gbDisplayAs.Controls.Add(this.rbDisplayHex);
+            this.gbDisplayAs.Controls.Add(this.rbDisplayDecimal);
+            this.gbDisplayAs.Controls.Add(this.rbDisplayBinary);
+            this.gbDisplayAs.Controls.Add(this.rbDisplayString);
+            this.gbDisplayAs.Location = new System.Drawing.Point(156, 39);
+            this.gbDisplayAs.Name = "gbDisplayAs";
+            this.gbDisplayAs.Size = new System.Drawing.Size(358, 49);
+            this.gbDisplayAs.TabIndex = 47;
+            this.gbDisplayAs.TabStop = false;
+            this.gbDisplayAs.Text = "Display Output As";
+            // 
+            // rbDisplayHex
+            // 
+            this.rbDisplayHex.AutoSize = true;
+            this.rbDisplayHex.Location = new System.Drawing.Point(205, 19);
+            this.rbDisplayHex.Name = "rbDisplayHex";
+            this.rbDisplayHex.Size = new System.Drawing.Size(44, 17);
+            this.rbDisplayHex.TabIndex = 3;
+            this.rbDisplayHex.TabStop = true;
+            this.rbDisplayHex.Text = "Hex";
+            this.rbDisplayHex.UseVisualStyleBackColor = true;
+            // 
+            // rbDisplayDecimal
+            // 
+            this.rbDisplayDecimal.AutoSize = true;
+            this.rbDisplayDecimal.Location = new System.Drawing.Point(132, 19);
+            this.rbDisplayDecimal.Name = "rbDisplayDecimal";
+            this.rbDisplayDecimal.Size = new System.Drawing.Size(63, 17);
+            this.rbDisplayDecimal.TabIndex = 2;
+            this.rbDisplayDecimal.TabStop = true;
+            this.rbDisplayDecimal.Text = "Decimal";
+            this.rbDisplayDecimal.UseVisualStyleBackColor = true;
+            // 
+            // rbDisplayBinary
+            // 
+            this.rbDisplayBinary.AutoSize = true;
+            this.rbDisplayBinary.Location = new System.Drawing.Point(68, 19);
+            this.rbDisplayBinary.Name = "rbDisplayBinary";
+            this.rbDisplayBinary.Size = new System.Drawing.Size(54, 17);
+            this.rbDisplayBinary.TabIndex = 1;
+            this.rbDisplayBinary.TabStop = true;
+            this.rbDisplayBinary.Text = "Binary";
+            this.rbDisplayBinary.UseVisualStyleBackColor = true;
+            // 
+            // rbDisplayString
+            // 
+            this.rbDisplayString.AutoSize = true;
+            this.rbDisplayString.Checked = true;
+            this.rbDisplayString.Location = new System.Drawing.Point(6, 19);
+            this.rbDisplayString.Name = "rbDisplayString";
+            this.rbDisplayString.Size = new System.Drawing.Size(52, 17);
+            this.rbDisplayString.TabIndex = 0;
+            this.rbDisplayString.TabStop = true;
+            this.rbDisplayString.Text = "String";
+            this.rbDisplayString.UseVisualStyleBackColor = true;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.btnClear);
+            this.groupBox2.Controls.Add(this.rtbData);
+            this.groupBox2.Location = new System.Drawing.Point(156, 94);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(358, 363);
+            this.groupBox2.TabIndex = 48;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Output";
+            // 
             // rtbData
             // 
             this.rtbData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.rtbData.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.rtbData.Location = new System.Drawing.Point(156, 39);
+            this.rtbData.Location = new System.Drawing.Point(6, 19);
             this.rtbData.Name = "rtbData";
-            this.rtbData.Size = new System.Drawing.Size(358, 381);
-            this.rtbData.TabIndex = 45;
+            this.rtbData.Size = new System.Drawing.Size(346, 308);
+            this.rtbData.TabIndex = 46;
             this.rtbData.Text = "";
             // 
             // btnClear
             // 
             this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClear.Location = new System.Drawing.Point(439, 427);
+            this.btnClear.Location = new System.Drawing.Point(277, 333);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
-            this.btnClear.TabIndex = 46;
+            this.btnClear.TabIndex = 47;
             this.btnClear.Text = "Clear";
             this.btnClear.UseVisualStyleBackColor = true;
-            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
-            // 
-            // gbDTR
-            // 
-            this.gbDTR.Controls.Add(this.rbDTROff);
-            this.gbDTR.Controls.Add(this.rbDTROn);
-            this.gbDTR.Location = new System.Drawing.Point(4, 258);
-            this.gbDTR.Name = "gbDTR";
-            this.gbDTR.Size = new System.Drawing.Size(130, 44);
-            this.gbDTR.TabIndex = 10;
-            this.gbDTR.TabStop = false;
-            this.gbDTR.Text = "DTR";
-            // 
-            // rbDTROff
-            // 
-            this.rbDTROff.AutoSize = true;
-            this.rbDTROff.ForeColor = System.Drawing.Color.Black;
-            this.rbDTROff.Location = new System.Drawing.Point(55, 19);
-            this.rbDTROff.Name = "rbDTROff";
-            this.rbDTROff.Size = new System.Drawing.Size(39, 17);
-            this.rbDTROff.TabIndex = 108;
-            this.rbDTROff.Text = "Off";
-            this.rbDTROff.UseVisualStyleBackColor = true;
-            // 
-            // rbDTROn
-            // 
-            this.rbDTROn.AutoSize = true;
-            this.rbDTROn.Checked = true;
-            this.rbDTROn.ForeColor = System.Drawing.Color.Black;
-            this.rbDTROn.Location = new System.Drawing.Point(9, 19);
-            this.rbDTROn.Name = "rbDTROn";
-            this.rbDTROn.Size = new System.Drawing.Size(39, 17);
-            this.rbDTROn.TabIndex = 107;
-            this.rbDTROn.TabStop = true;
-            this.rbDTROn.Text = "On";
-            this.rbDTROn.UseVisualStyleBackColor = true;
-            // 
-            // gbRTS
-            // 
-            this.gbRTS.Controls.Add(this.rbRTSOff);
-            this.gbRTS.Controls.Add(this.rbRTSOn);
-            this.gbRTS.Location = new System.Drawing.Point(4, 306);
-            this.gbRTS.Name = "gbRTS";
-            this.gbRTS.Size = new System.Drawing.Size(130, 44);
-            this.gbRTS.TabIndex = 11;
-            this.gbRTS.TabStop = false;
-            this.gbRTS.Text = "RTS";
-            // 
-            // rbRTSOff
-            // 
-            this.rbRTSOff.AutoSize = true;
-            this.rbRTSOff.ForeColor = System.Drawing.Color.Black;
-            this.rbRTSOff.Location = new System.Drawing.Point(55, 19);
-            this.rbRTSOff.Name = "rbRTSOff";
-            this.rbRTSOff.Size = new System.Drawing.Size(39, 17);
-            this.rbRTSOff.TabIndex = 108;
-            this.rbRTSOff.Text = "Off";
-            this.rbRTSOff.UseVisualStyleBackColor = true;
-            // 
-            // rbRTSOn
-            // 
-            this.rbRTSOn.AutoSize = true;
-            this.rbRTSOn.Checked = true;
-            this.rbRTSOn.ForeColor = System.Drawing.Color.Black;
-            this.rbRTSOn.Location = new System.Drawing.Point(9, 19);
-            this.rbRTSOn.Name = "rbRTSOn";
-            this.rbRTSOn.Size = new System.Drawing.Size(39, 17);
-            this.rbRTSOn.TabIndex = 107;
-            this.rbRTSOn.TabStop = true;
-            this.rbRTSOn.Text = "On";
-            this.rbRTSOn.UseVisualStyleBackColor = true;
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(526, 460);
-            this.Controls.Add(this.btnClear);
+            this.Controls.Add(this.gbDisplayAs);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.rtbData);
+            this.Controls.Add(this.groupBox2);
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Port Listener";
@@ -361,10 +437,13 @@
             this.panel1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.gbDTR.ResumeLayout(false);
-            this.gbDTR.PerformLayout();
             this.gbRTS.ResumeLayout(false);
             this.gbRTS.PerformLayout();
+            this.gbDTR.ResumeLayout(false);
+            this.gbDTR.PerformLayout();
+            this.gbDisplayAs.ResumeLayout(false);
+            this.gbDisplayAs.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -386,15 +465,21 @@
         private System.Windows.Forms.ComboBox cbParity;
         private System.Windows.Forms.ComboBox cbDataBit;
         private System.Windows.Forms.ComboBox cbBaudRate;
-        private System.Windows.Forms.RichTextBox rtbData;
         private System.Windows.Forms.Button btnStop;
-        private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.GroupBox gbDTR;
         private System.Windows.Forms.RadioButton rbDTROff;
         private System.Windows.Forms.RadioButton rbDTROn;
         private System.Windows.Forms.GroupBox gbRTS;
         private System.Windows.Forms.RadioButton rbRTSOff;
         private System.Windows.Forms.RadioButton rbRTSOn;
+        private System.Windows.Forms.GroupBox gbDisplayAs;
+        private System.Windows.Forms.RadioButton rbDisplayString;
+        private System.Windows.Forms.RadioButton rbDisplayBinary;
+        private System.Windows.Forms.RadioButton rbDisplayDecimal;
+        private System.Windows.Forms.RadioButton rbDisplayHex;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.RichTextBox rtbData;
     }
 }
 

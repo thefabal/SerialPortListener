@@ -15,6 +15,7 @@ using System.Text.RegularExpressions;
 namespace port_listener {
     public partial class frmMain: Form {
         private string log_data = string.Empty;
+        private string output_type = string.Empty;
         private SerialPort serialport;
 
         public frmMain() {
@@ -113,6 +114,16 @@ namespace port_listener {
 
             serialport.DataReceived += new SerialDataReceivedEventHandler( DataReceivedHandler );
 
+            if( rbDisplayString.Checked ) {
+                output_type = "string";
+            } else if( rbDisplayBinary.Checked ) {
+                output_type = "binary";
+            } else if( rbDisplayDecimal.Checked ) {
+                output_type = "decimal";
+            } else if( rbDisplayHex.Checked ) {
+                output_type = "hex";
+            }
+
             serialport.Open();
 
             cbAuto.Enabled = false;
@@ -144,6 +155,7 @@ namespace port_listener {
             rbDTROn.Enabled = true;
             rbRTSOff.Enabled = true;
             rbRTSOn.Enabled = true;
+            output_type = string.Empty;
         }
 
         private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e ) {
@@ -158,7 +170,7 @@ namespace port_listener {
                 rtbData.BeginInvoke( (MethodInvoker)delegate () { ParseReadData( data ); } );
             } else {
                 log_data += data;
-                rtbData.Text += replaceSpecialChars( data );
+                rtbData.Text += ConvertType( data, output_type );
 
                 if( cbAuto.Checked ) {
                     MatchCollection mcReadoutLines = Regex.Matches(log_data, "\x06([0-9]{3})\r\n");
@@ -221,6 +233,36 @@ namespace port_listener {
 
             }
         }
+
+        public string ConvertType( string text, string type ) {
+            string result = "";
+
+            switch( type ) {
+                case "string":
+                    return replaceSpecialChars(text);
+
+                case "hex":
+                    foreach( char value in text ) {
+                        result = result + "0x" + Convert.ToString( value, 16 ) + " ";
+                    }
+                break;
+
+                case "binary":
+                    foreach( char value in text ) {
+                        result = result + "0b" + Convert.ToString( value, 2 ) + " ";
+                    }
+                break;
+
+                case "decimal":
+                    foreach( char value in text ) {
+                        result = result + "0d" + Convert.ToString( value, 10 ) + " ";
+                    }
+                break;
+            }
+
+            return result;
+        }
+
     }
 
     public class serial_port {
