@@ -262,7 +262,6 @@ namespace port_listener {
 
             return result;
         }
-
     }
 
     public class serial_port {
