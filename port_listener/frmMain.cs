@@ -15,7 +15,6 @@ using System.Text.RegularExpressions;
 namespace port_listener {
     public partial class frmMain: Form {
         private string log_data = string.Empty;
-        private string output_type = string.Empty;
         private SerialPort serialport;
 
         public frmMain() {
@@ -46,9 +45,9 @@ namespace port_listener {
 
             btnStop.Enabled = false;
 
-            rtbData.Enabled = true;
-            rtbData.ReadOnly = true;
-            rtbData.BackColor = Color.White;
+            hbSerialData.Enabled = true;
+            hbSerialData.ReadOnly = true;
+            hbSerialData.BackColor = Color.White;
         }
 
         private void cbPortName_SelectedIndexChanged( object sender, EventArgs e ) {
@@ -114,16 +113,6 @@ namespace port_listener {
 
             serialport.DataReceived += new SerialDataReceivedEventHandler( DataReceivedHandler );
 
-            if( rbDisplayString.Checked ) {
-                output_type = "string";
-            } else if( rbDisplayBinary.Checked ) {
-                output_type = "binary";
-            } else if( rbDisplayDecimal.Checked ) {
-                output_type = "decimal";
-            } else if( rbDisplayHex.Checked ) {
-                output_type = "hex";
-            }
-
             serialport.Open();
 
             cbAuto.Enabled = false;
@@ -155,7 +144,6 @@ namespace port_listener {
             rbDTROn.Enabled = true;
             rbRTSOff.Enabled = true;
             rbRTSOn.Enabled = true;
-            output_type = string.Empty;
         }
 
         private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e ) {
@@ -166,13 +154,14 @@ namespace port_listener {
         }
 
         private void ParseReadData( string data ) {
-            if( rtbData.InvokeRequired ) {
-                rtbData.BeginInvoke( (MethodInvoker)delegate () { ParseReadData( data ); } );
+            if(hbSerialData.InvokeRequired ) {
+                hbSerialData.BeginInvoke( (MethodInvoker)delegate () { ParseReadData( data ); } );
             } else {
                 log_data += data;
-                rtbData.Text += ConvertType( data, output_type );
+                hbSerialData.ByteProvider = new Be.Windows.Forms.DynamicByteProvider( Encoding.ASCII.GetBytes( log_data ) );
+                //hbSerialData.Text += data;
 
-                if( cbAuto.Checked ) {
+                if( cbAuto.Checked && serialport.BaudRate == 300 ) {
                     MatchCollection mcReadoutLines = Regex.Matches(log_data, "\x06([0-9]{3})\r\n");
                     if ( mcReadoutLines.Count > 0 ) {
                         int baudrate = 0;
@@ -188,9 +177,7 @@ namespace port_listener {
                         }
 
                         if ( serialport.BaudRate != baudrate ) {
-                            serialport.Close();
                             serialport.BaudRate = baudrate;
-                            serialport.Open();
                         }
                     }
                 }
@@ -198,28 +185,11 @@ namespace port_listener {
         }
 
         private void btnClear_Click( object sender, EventArgs e ) {
-            rtbData.Clear();
+            hbSerialData.Text = "";
         }
 
         void RTBGotFocus( object sender, System.EventArgs e ) {
             SendKeys.Send( "{tab}" );
-        }
-
-        public string replaceSpecialChars( string text ) {
-            string strReturn = string.Empty;
-            char[] chrReturn;
-
-            chrReturn = text.ToCharArray();
-
-            for ( int i = 0; i < chrReturn.Length; i++ ) {
-                if ( chrReturn[ i ] < 18 ) {
-                    strReturn += "<" + String.Format( "0x{0:X2}", Convert.ToInt32( chrReturn[ i ] ) ) + ">";
-                } else {
-                    strReturn += chrReturn[ i ].ToString();
-                }
-            }
-
-            return strReturn.Replace( "<0x0A>", "<0x0A>\r\n" );
         }
 
         void getAvailablePorts() {
@@ -233,36 +203,6 @@ namespace port_listener {
 
             }
         }
-
-        public string ConvertType( string text, string type ) {
-            string result = "";
-
-            switch( type ) {
-                case "string":
-                    return replaceSpecialChars(text);
-
-                case "hex":
-                    foreach( char value in text ) {
-                        result = result + "0x" + Convert.ToString( value, 16 ) + " ";
-                    }
-                break;
-
-                case "binary":
-                    foreach( char value in text ) {
-                        result = result + "0b" + Convert.ToString( value, 2 ) + " ";
-                    }
-                break;
-
-                case "decimal":
-                    foreach( char value in text ) {
-                        result = result + "0d" + Convert.ToString( value, 10 ) + " ";
-                    }
-                break;
-            }
-
-            return result;
-        }
-
     }
 
     public class serial_port {

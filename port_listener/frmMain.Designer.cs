@@ -45,19 +45,13 @@
             this.cbParity = new System.Windows.Forms.ComboBox();
             this.cbDataBit = new System.Windows.Forms.ComboBox();
             this.cbBaudRate = new System.Windows.Forms.ComboBox();
-            this.gbDisplayAs = new System.Windows.Forms.GroupBox();
-            this.rbDisplayHex = new System.Windows.Forms.RadioButton();
-            this.rbDisplayDecimal = new System.Windows.Forms.RadioButton();
-            this.rbDisplayBinary = new System.Windows.Forms.RadioButton();
-            this.rbDisplayString = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.rtbData = new System.Windows.Forms.RichTextBox();
+            this.hbSerialData = new Be.Windows.Forms.HexBox();
             this.btnClear = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.gbRTS.SuspendLayout();
             this.gbDTR.SuspendLayout();
-            this.gbDisplayAs.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -67,7 +61,7 @@
             this.label9.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label9.Location = new System.Drawing.Point(0, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(526, 39);
+            this.label9.Size = new System.Drawing.Size(664, 39);
             this.label9.TabIndex = 42;
             this.label9.Text = "Port Listener";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -81,7 +75,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 39);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(150, 421);
+            this.panel1.Size = new System.Drawing.Size(150, 422);
             this.panel1.TabIndex = 44;
             // 
             // btnStop
@@ -330,103 +324,52 @@
             this.cbBaudRate.Size = new System.Drawing.Size(121, 21);
             this.cbBaudRate.TabIndex = 6;
             // 
-            // gbDisplayAs
-            // 
-            this.gbDisplayAs.Controls.Add(this.rbDisplayHex);
-            this.gbDisplayAs.Controls.Add(this.rbDisplayDecimal);
-            this.gbDisplayAs.Controls.Add(this.rbDisplayBinary);
-            this.gbDisplayAs.Controls.Add(this.rbDisplayString);
-            this.gbDisplayAs.Location = new System.Drawing.Point(156, 39);
-            this.gbDisplayAs.Name = "gbDisplayAs";
-            this.gbDisplayAs.Size = new System.Drawing.Size(358, 49);
-            this.gbDisplayAs.TabIndex = 47;
-            this.gbDisplayAs.TabStop = false;
-            this.gbDisplayAs.Text = "Display Output As";
-            // 
-            // rbDisplayHex
-            // 
-            this.rbDisplayHex.AutoSize = true;
-            this.rbDisplayHex.Location = new System.Drawing.Point(205, 19);
-            this.rbDisplayHex.Name = "rbDisplayHex";
-            this.rbDisplayHex.Size = new System.Drawing.Size(44, 17);
-            this.rbDisplayHex.TabIndex = 3;
-            this.rbDisplayHex.TabStop = true;
-            this.rbDisplayHex.Text = "Hex";
-            this.rbDisplayHex.UseVisualStyleBackColor = true;
-            // 
-            // rbDisplayDecimal
-            // 
-            this.rbDisplayDecimal.AutoSize = true;
-            this.rbDisplayDecimal.Location = new System.Drawing.Point(132, 19);
-            this.rbDisplayDecimal.Name = "rbDisplayDecimal";
-            this.rbDisplayDecimal.Size = new System.Drawing.Size(63, 17);
-            this.rbDisplayDecimal.TabIndex = 2;
-            this.rbDisplayDecimal.TabStop = true;
-            this.rbDisplayDecimal.Text = "Decimal";
-            this.rbDisplayDecimal.UseVisualStyleBackColor = true;
-            // 
-            // rbDisplayBinary
-            // 
-            this.rbDisplayBinary.AutoSize = true;
-            this.rbDisplayBinary.Location = new System.Drawing.Point(68, 19);
-            this.rbDisplayBinary.Name = "rbDisplayBinary";
-            this.rbDisplayBinary.Size = new System.Drawing.Size(54, 17);
-            this.rbDisplayBinary.TabIndex = 1;
-            this.rbDisplayBinary.TabStop = true;
-            this.rbDisplayBinary.Text = "Binary";
-            this.rbDisplayBinary.UseVisualStyleBackColor = true;
-            // 
-            // rbDisplayString
-            // 
-            this.rbDisplayString.AutoSize = true;
-            this.rbDisplayString.Checked = true;
-            this.rbDisplayString.Location = new System.Drawing.Point(6, 19);
-            this.rbDisplayString.Name = "rbDisplayString";
-            this.rbDisplayString.Size = new System.Drawing.Size(52, 17);
-            this.rbDisplayString.TabIndex = 0;
-            this.rbDisplayString.TabStop = true;
-            this.rbDisplayString.Text = "String";
-            this.rbDisplayString.UseVisualStyleBackColor = true;
-            // 
             // groupBox2
             // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.hbSerialData);
             this.groupBox2.Controls.Add(this.btnClear);
-            this.groupBox2.Controls.Add(this.rtbData);
-            this.groupBox2.Location = new System.Drawing.Point(156, 94);
+            this.groupBox2.Location = new System.Drawing.Point(156, 39);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(358, 363);
+            this.groupBox2.Size = new System.Drawing.Size(504, 419);
             this.groupBox2.TabIndex = 48;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Output";
             // 
-            // rtbData
+            // hbSerialData
             // 
-            this.rtbData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.hbSerialData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.rtbData.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.rtbData.Location = new System.Drawing.Point(6, 19);
-            this.rtbData.Name = "rtbData";
-            this.rtbData.Size = new System.Drawing.Size(346, 308);
-            this.rtbData.TabIndex = 46;
-            this.rtbData.Text = "";
+            this.hbSerialData.ColumnInfoVisible = true;
+            this.hbSerialData.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.hbSerialData.Location = new System.Drawing.Point(6, 19);
+            this.hbSerialData.Name = "hbSerialData";
+            this.hbSerialData.ShadowSelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(60)))), ((int)(((byte)(188)))), ((int)(((byte)(255)))));
+            this.hbSerialData.Size = new System.Drawing.Size(492, 364);
+            this.hbSerialData.StringViewVisible = true;
+            this.hbSerialData.TabIndex = 48;
+            this.hbSerialData.UseFixedBytesPerLine = true;
+            this.hbSerialData.VScrollBarVisible = true;
             // 
             // btnClear
             // 
             this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClear.Location = new System.Drawing.Point(277, 333);
+            this.btnClear.Location = new System.Drawing.Point(423, 389);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
             this.btnClear.TabIndex = 47;
             this.btnClear.Text = "Clear";
             this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(526, 460);
-            this.Controls.Add(this.gbDisplayAs);
+            this.ClientSize = new System.Drawing.Size(664, 461);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.groupBox2);
@@ -441,8 +384,6 @@
             this.gbRTS.PerformLayout();
             this.gbDTR.ResumeLayout(false);
             this.gbDTR.PerformLayout();
-            this.gbDisplayAs.ResumeLayout(false);
-            this.gbDisplayAs.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -472,14 +413,9 @@
         private System.Windows.Forms.GroupBox gbRTS;
         private System.Windows.Forms.RadioButton rbRTSOff;
         private System.Windows.Forms.RadioButton rbRTSOn;
-        private System.Windows.Forms.GroupBox gbDisplayAs;
-        private System.Windows.Forms.RadioButton rbDisplayString;
-        private System.Windows.Forms.RadioButton rbDisplayBinary;
-        private System.Windows.Forms.RadioButton rbDisplayDecimal;
-        private System.Windows.Forms.RadioButton rbDisplayHex;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button btnClear;
-        private System.Windows.Forms.RichTextBox rtbData;
+        private Be.Windows.Forms.HexBox hbSerialData;
     }
 }
 
