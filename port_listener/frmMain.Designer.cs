@@ -46,13 +46,22 @@
             this.cbDataBit = new System.Windows.Forms.ComboBox();
             this.cbBaudRate = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.nudGroupSize = new System.Windows.Forms.NumericUpDown();
+            this.label7 = new System.Windows.Forms.Label();
+            this.nudBytePerLine = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
             this.hbSerialData = new Be.Windows.Forms.HexBox();
             this.btnClear = new System.Windows.Forms.Button();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.fileSizeToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.gbRTS.SuspendLayout();
             this.gbDTR.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudGroupSize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudBytePerLine)).BeginInit();
+            this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // label9
@@ -72,7 +81,6 @@
             this.panel1.Controls.Add(this.cbAuto);
             this.panel1.Controls.Add(this.btnListen);
             this.panel1.Controls.Add(this.groupBox1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 39);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(150, 422);
@@ -329,14 +337,96 @@
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.nudGroupSize);
+            this.groupBox2.Controls.Add(this.label7);
+            this.groupBox2.Controls.Add(this.nudBytePerLine);
+            this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.hbSerialData);
             this.groupBox2.Controls.Add(this.btnClear);
             this.groupBox2.Location = new System.Drawing.Point(156, 39);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(504, 419);
+            this.groupBox2.Size = new System.Drawing.Size(504, 422);
             this.groupBox2.TabIndex = 48;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Output";
+            // 
+            // nudGroupSize
+            // 
+            this.nudGroupSize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.nudGroupSize.Increment = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.nudGroupSize.Location = new System.Drawing.Point(266, 395);
+            this.nudGroupSize.Maximum = new decimal(new int[] {
+            32,
+            0,
+            0,
+            0});
+            this.nudGroupSize.Minimum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.nudGroupSize.Name = "nudGroupSize";
+            this.nudGroupSize.Size = new System.Drawing.Size(78, 20);
+            this.nudGroupSize.TabIndex = 53;
+            this.nudGroupSize.Value = new decimal(new int[] {
+            4,
+            0,
+            0,
+            0});
+            this.nudGroupSize.ValueChanged += new System.EventHandler(this.NudGroupSize_ValueChanged);
+            // 
+            // label7
+            // 
+            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(197, 397);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(63, 13);
+            this.label7.TabIndex = 52;
+            this.label7.Text = "Group size :";
+            // 
+            // nudBytePerLine
+            // 
+            this.nudBytePerLine.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.nudBytePerLine.Increment = new decimal(new int[] {
+            4,
+            0,
+            0,
+            0});
+            this.nudBytePerLine.Location = new System.Drawing.Point(88, 395);
+            this.nudBytePerLine.Maximum = new decimal(new int[] {
+            32,
+            0,
+            0,
+            0});
+            this.nudBytePerLine.Minimum = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
+            this.nudBytePerLine.Name = "nudBytePerLine";
+            this.nudBytePerLine.Size = new System.Drawing.Size(78, 20);
+            this.nudBytePerLine.TabIndex = 51;
+            this.nudBytePerLine.Value = new decimal(new int[] {
+            16,
+            0,
+            0,
+            0});
+            this.nudBytePerLine.ValueChanged += new System.EventHandler(this.NudBytePerLine_ValueChanged);
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 397);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(76, 13);
+            this.label3.TabIndex = 50;
+            this.label3.Text = "Bytes per line :";
             // 
             // hbSerialData
             // 
@@ -345,10 +435,11 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.hbSerialData.ColumnInfoVisible = true;
             this.hbSerialData.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.hbSerialData.GroupSeparatorVisible = true;
             this.hbSerialData.Location = new System.Drawing.Point(6, 19);
             this.hbSerialData.Name = "hbSerialData";
             this.hbSerialData.ShadowSelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(60)))), ((int)(((byte)(188)))), ((int)(((byte)(255)))));
-            this.hbSerialData.Size = new System.Drawing.Size(492, 364);
+            this.hbSerialData.Size = new System.Drawing.Size(492, 367);
             this.hbSerialData.StringViewVisible = true;
             this.hbSerialData.TabIndex = 48;
             this.hbSerialData.UseFixedBytesPerLine = true;
@@ -357,7 +448,7 @@
             // btnClear
             // 
             this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClear.Location = new System.Drawing.Point(423, 389);
+            this.btnClear.Location = new System.Drawing.Point(423, 392);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
             this.btnClear.TabIndex = 47;
@@ -365,11 +456,27 @@
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
+            // statusStrip
+            // 
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileSizeToolStripStatusLabel});
+            this.statusStrip.Location = new System.Drawing.Point(0, 462);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(664, 22);
+            this.statusStrip.TabIndex = 49;
+            this.statusStrip.Text = "statusStrip1";
+            // 
+            // fileSizeToolStripStatusLabel
+            // 
+            this.fileSizeToolStripStatusLabel.Name = "fileSizeToolStripStatusLabel";
+            this.fileSizeToolStripStatusLabel.Size = new System.Drawing.Size(0, 17);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(664, 461);
+            this.ClientSize = new System.Drawing.Size(664, 484);
+            this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.groupBox2);
@@ -385,7 +492,13 @@
             this.gbDTR.ResumeLayout(false);
             this.gbDTR.PerformLayout();
             this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudGroupSize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudBytePerLine)).EndInit();
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -416,6 +529,12 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button btnClear;
         private Be.Windows.Forms.HexBox hbSerialData;
+        private System.Windows.Forms.NumericUpDown nudBytePerLine;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.NumericUpDown nudGroupSize;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.StatusStrip statusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel fileSizeToolStripStatusLabel;
     }
 }
 

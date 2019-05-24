@@ -11,11 +11,13 @@ using System.IO.Ports;
 
 using System.Management;
 using System.Text.RegularExpressions;
+using System.Globalization;
 
 namespace port_listener {
     public partial class frmMain: Form {
         private string log_data = string.Empty;
         private SerialPort serialport;
+        private readonly Be.Windows.Forms.DynamicByteProvider dynamicByteProvider = new Be.Windows.Forms.DynamicByteProvider( new byte[] { } );
 
         public frmMain() {
             InitializeComponent();
@@ -48,6 +50,48 @@ namespace port_listener {
             hbSerialData.Enabled = true;
             hbSerialData.ReadOnly = true;
             hbSerialData.BackColor = Color.White;
+            hbSerialData.ByteProvider = dynamicByteProvider;
+
+            dynamicByteProvider.Changed += new EventHandler( byteProvider_Changed );
+            dynamicByteProvider.LengthChanged += new EventHandler( byteProvider_LengthChanged );
+
+            nudGroupSize.Maximum = nudBytePerLine.Value;
+        }
+
+        void byteProvider_Changed( object sender, EventArgs e ) {
+            hbSerialData.Refresh();
+        }
+
+        void byteProvider_LengthChanged(object sender, EventArgs e) {
+            if(hbSerialData.ByteProvider == null)
+                fileSizeToolStripStatusLabel.Text = string.Empty;
+            else
+                fileSizeToolStripStatusLabel.Text = GetDisplayBytes( (double)hbSerialData.ByteProvider.Length );
+        }
+
+        public static string GetDisplayBytes( double size ) {
+            const long multi = 1024;
+            const long kb = multi;
+            const long mb = kb * multi;
+            const long gb = mb * multi;
+            const long tb = gb * multi;
+
+            const string BYTES = "Bytes";
+            const string KB = "KB";
+            const string MB = "MB";
+            const string GB = "GB";
+            const string TB = "TB";
+
+            if(size < kb)
+                return string.Format( "{0} {1}", size, BYTES );
+            else if(size < mb)
+                return string.Format( "{0:0.00} {1}", size / kb, KB );
+            else if(size < gb)
+                return string.Format( "{0:0.00} {1}", size / mb, MB );
+            else if(size < tb)
+                return string.Format( "{0:0.00} {1}", size / gb, GB );
+            else
+                return string.Format( "{0:0.00} {1}", size / tb, TB );
         }
 
         private void cbPortName_SelectedIndexChanged( object sender, EventArgs e ) {
@@ -158,8 +202,7 @@ namespace port_listener {
                 hbSerialData.BeginInvoke( (MethodInvoker)delegate () { ParseReadData( data ); } );
             } else {
                 log_data += data;
-                hbSerialData.ByteProvider = new Be.Windows.Forms.DynamicByteProvider( Encoding.ASCII.GetBytes( log_data ) );
-                //hbSerialData.Text += data;
+                dynamicByteProvider.InsertBytes( dynamicByteProvider.Length, Encoding.ASCII.GetBytes( data ) );
 
                 if( cbAuto.Checked && serialport.BaudRate == 300 ) {
                     MatchCollection mcReadoutLines = Regex.Matches(log_data, "\x06([0-9]{3})\r\n");
@@ -185,7 +228,7 @@ namespace port_listener {
         }
 
         private void btnClear_Click( object sender, EventArgs e ) {
-            hbSerialData.Text = "";
+            dynamicByteProvider.DeleteBytes( 0, dynamicByteProvider.Length );
         }
 
         void RTBGotFocus( object sender, System.EventArgs e ) {
@@ -202,6 +245,15 @@ namespace port_listener {
             } catch {
 
             }
+        }
+
+        private void NudBytePerLine_ValueChanged( object sender, EventArgs e ) {
+            hbSerialData.BytesPerLine = Convert.ToInt32( nudBytePerLine.Value );
+            nudGroupSize.Maximum = nudBytePerLine.Value;
+        }
+
+        private void NudGroupSize_ValueChanged( object sender, EventArgs e ) {
+            hbSerialData.GroupSize = Convert.ToInt32( nudGroupSize.Value );
         }
     }
 
