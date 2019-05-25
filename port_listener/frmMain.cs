@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.IO.Ports;
+using Be.Windows.Forms;
 
 using System.Management;
 using System.Text.RegularExpressions;
@@ -17,7 +18,7 @@ namespace port_listener {
     public partial class frmMain: Form {
         private string log_data = string.Empty;
         private SerialPort serialport;
-        private readonly Be.Windows.Forms.DynamicByteProvider dynamicByteProvider = new Be.Windows.Forms.DynamicByteProvider( new byte[] { } );
+        private readonly DynamicByteProvider dynamicByteProvider = new DynamicByteProvider( new byte[] { } );
 
         public frmMain() {
             InitializeComponent();
@@ -254,6 +255,22 @@ namespace port_listener {
 
         private void NudGroupSize_ValueChanged( object sender, EventArgs e ) {
             hbSerialData.GroupSize = Convert.ToInt32( nudGroupSize.Value );
+        }
+
+        private void BtnSave_Click( object sender, EventArgs e ) {
+            SaveFileDialog saveFileDialog = new SaveFileDialog() {
+                OverwritePrompt = true,
+                AddExtension = true,
+                DefaultExt = ".txt",
+                Filter = "Text Files|*.txt"
+            };
+
+            if( saveFileDialog.ShowDialog() == DialogResult.OK ) {
+                StreamWriter serialLog = new StreamWriter(saveFileDialog.FileName);
+
+                serialLog.Write( System.Text.Encoding.ASCII.GetString( ( ( DynamicByteProvider )hbSerialData.ByteProvider ).Bytes.ToArray() ) );
+                serialLog.Close();
+            }
         }
     }
 

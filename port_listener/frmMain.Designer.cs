@@ -46,6 +46,7 @@
             this.cbDataBit = new System.Windows.Forms.ComboBox();
             this.cbBaudRate = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnSave = new System.Windows.Forms.Button();
             this.nudGroupSize = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
             this.nudBytePerLine = new System.Windows.Forms.NumericUpDown();
@@ -72,7 +73,7 @@
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(664, 39);
             this.label9.TabIndex = 42;
-            this.label9.Text = "Port Listener";
+            this.label9.Text = "Serial Port Listener";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel1
@@ -337,6 +338,7 @@
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.btnSave);
             this.groupBox2.Controls.Add(this.nudGroupSize);
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.nudBytePerLine);
@@ -350,6 +352,17 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Output";
             // 
+            // btnSave
+            // 
+            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSave.Location = new System.Drawing.Point(363, 365);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(133, 23);
+            this.btnSave.TabIndex = 54;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.BtnSave_Click);
+            // 
             // nudGroupSize
             // 
             this.nudGroupSize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -358,7 +371,7 @@
             0,
             0,
             0});
-            this.nudGroupSize.Location = new System.Drawing.Point(266, 395);
+            this.nudGroupSize.Location = new System.Drawing.Point(88, 395);
             this.nudGroupSize.Maximum = new decimal(new int[] {
             32,
             0,
@@ -383,7 +396,7 @@
             // 
             this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(197, 397);
+            this.label7.Location = new System.Drawing.Point(6, 397);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(63, 13);
             this.label7.TabIndex = 52;
@@ -397,7 +410,7 @@
             0,
             0,
             0});
-            this.nudBytePerLine.Location = new System.Drawing.Point(88, 395);
+            this.nudBytePerLine.Location = new System.Drawing.Point(88, 368);
             this.nudBytePerLine.Maximum = new decimal(new int[] {
             32,
             0,
@@ -422,7 +435,7 @@
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 397);
+            this.label3.Location = new System.Drawing.Point(6, 370);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(76, 13);
             this.label3.TabIndex = 50;
@@ -439,7 +452,7 @@
             this.hbSerialData.Location = new System.Drawing.Point(6, 19);
             this.hbSerialData.Name = "hbSerialData";
             this.hbSerialData.ShadowSelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(60)))), ((int)(((byte)(188)))), ((int)(((byte)(255)))));
-            this.hbSerialData.Size = new System.Drawing.Size(492, 367);
+            this.hbSerialData.Size = new System.Drawing.Size(492, 338);
             this.hbSerialData.StringViewVisible = true;
             this.hbSerialData.TabIndex = 48;
             this.hbSerialData.UseFixedBytesPerLine = true;
@@ -448,9 +461,9 @@
             // btnClear
             // 
             this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClear.Location = new System.Drawing.Point(423, 392);
+            this.btnClear.Location = new System.Drawing.Point(363, 392);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(75, 23);
+            this.btnClear.Size = new System.Drawing.Size(135, 23);
             this.btnClear.TabIndex = 47;
             this.btnClear.Text = "Clear";
             this.btnClear.UseVisualStyleBackColor = true;
@@ -482,7 +495,7 @@
             this.Controls.Add(this.groupBox2);
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Port Listener";
+            this.Text = "Serial Port Listener";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -535,6 +548,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel fileSizeToolStripStatusLabel;
+        private System.Windows.Forms.Button btnSave;
     }
 }
 
