@@ -55,6 +55,8 @@
             this.btnClear = new System.Windows.Forms.Button();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.fileSizeToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.connectionSettingRateToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.baudRateToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.gbRTS.SuspendLayout();
@@ -472,7 +474,9 @@
             // statusStrip
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileSizeToolStripStatusLabel});
+            this.fileSizeToolStripStatusLabel,
+            this.connectionSettingRateToolStripStatusLabel,
+            this.baudRateToolStripStatusLabel});
             this.statusStrip.Location = new System.Drawing.Point(0, 462);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(664, 22);
@@ -481,8 +485,21 @@
             // 
             // fileSizeToolStripStatusLabel
             // 
+            this.fileSizeToolStripStatusLabel.AutoSize = false;
             this.fileSizeToolStripStatusLabel.Name = "fileSizeToolStripStatusLabel";
-            this.fileSizeToolStripStatusLabel.Size = new System.Drawing.Size(0, 17);
+            this.fileSizeToolStripStatusLabel.Size = new System.Drawing.Size(125, 17);
+            // 
+            // connectionSettingRateToolStripStatusLabel
+            // 
+            this.connectionSettingRateToolStripStatusLabel.AutoSize = false;
+            this.connectionSettingRateToolStripStatusLabel.Name = "connectionSettingRateToolStripStatusLabel";
+            this.connectionSettingRateToolStripStatusLabel.Size = new System.Drawing.Size(125, 17);
+            // 
+            // baudRateToolStripStatusLabel
+            // 
+            this.baudRateToolStripStatusLabel.AutoSize = false;
+            this.baudRateToolStripStatusLabel.Name = "baudRateToolStripStatusLabel";
+            this.baudRateToolStripStatusLabel.Size = new System.Drawing.Size(125, 17);
             // 
             // frmMain
             // 
@@ -549,6 +566,8 @@
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel fileSizeToolStripStatusLabel;
         private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.ToolStripStatusLabel connectionSettingRateToolStripStatusLabel;
+        private System.Windows.Forms.ToolStripStatusLabel baudRateToolStripStatusLabel;
     }
 }
 

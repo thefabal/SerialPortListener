@@ -135,19 +135,54 @@ namespace port_listener {
                 DtrEnable = false
             };
 
-            switch ( cbParity.SelectedIndex ) {
-                case 0: serialport.Parity = Parity.None; break;
-                case 1: serialport.Parity = Parity.Odd; break;
-                case 2: serialport.Parity = Parity.Even; break;
-                case 3: serialport.Parity = Parity.Mark; break;
-                case 4: serialport.Parity = Parity.Space; break;
+            connectionSettingRateToolStripStatusLabel.Text = serialport.DataBits.ToString();
+
+            switch( cbParity.SelectedIndex ) {
+                case 0:
+                    serialport.Parity = Parity.None;
+                    connectionSettingRateToolStripStatusLabel.Text += "N";
+                break;
+
+                case 1:
+                    serialport.Parity = Parity.Odd;
+                    connectionSettingRateToolStripStatusLabel.Text += "O";
+                break;
+
+                case 2:
+                    serialport.Parity = Parity.Even;
+                    connectionSettingRateToolStripStatusLabel.Text += "E";
+                break;
+
+                case 3:
+                    serialport.Parity = Parity.Mark;
+                    connectionSettingRateToolStripStatusLabel.Text += "M";
+                break;
+
+                case 4:
+                    serialport.Parity = Parity.Space;
+                    connectionSettingRateToolStripStatusLabel.Text += "S";
+                break;
             }
 
-            switch ( cbStopBit.SelectedIndex ) {
-                case 0: serialport.StopBits = StopBits.None; break;
-                case 1: serialport.StopBits = StopBits.One; break;
-                case 2: serialport.StopBits = StopBits.Two; break;
-                case 3: serialport.StopBits = StopBits.OnePointFive; break;
+            switch( cbStopBit.SelectedIndex ) {
+                case 0:
+                    serialport.StopBits = StopBits.None;
+                break;
+
+                case 1:
+                    serialport.StopBits = StopBits.One;
+                    connectionSettingRateToolStripStatusLabel.Text += "1";
+                break;
+
+                case 2:
+                    serialport.StopBits = StopBits.Two;
+                    connectionSettingRateToolStripStatusLabel.Text += "2";
+                break;
+
+                case 3:
+                    serialport.StopBits = StopBits.OnePointFive;
+                    connectionSettingRateToolStripStatusLabel.Text += "15";
+                break;
             }
 
             serialport.DtrEnable = ( rbDTROn.Checked ) ? ( true ) : ( false );
@@ -172,6 +207,8 @@ namespace port_listener {
             rbDTROn.Enabled = false;
             rbRTSOff.Enabled = false;
             rbRTSOn.Enabled = false;
+
+            baudRateToolStripStatusLabel.Text = serialport.BaudRate + "bps";
         }
 
         private void btnStop_Click( object sender, EventArgs e ) {
@@ -222,6 +259,8 @@ namespace port_listener {
 
                         if ( serialport.BaudRate != baudrate ) {
                             serialport.BaudRate = baudrate;
+
+                            baudRateToolStripStatusLabel.Text = serialport.BaudRate + "bps";
                         }
                     }
                 }
