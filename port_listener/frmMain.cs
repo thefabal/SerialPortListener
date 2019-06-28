@@ -137,28 +137,28 @@ namespace port_listener {
 
             connectionSettingRateToolStripStatusLabel.Text = serialport.DataBits.ToString();
 
-            switch( cbParity.SelectedIndex ) {
-                case 0:
+            switch( (string)cbParity.SelectedItem ) {
+                case "None":
                     serialport.Parity = Parity.None;
                     connectionSettingRateToolStripStatusLabel.Text += "N";
                 break;
 
-                case 1:
+                case "Odd":
                     serialport.Parity = Parity.Odd;
                     connectionSettingRateToolStripStatusLabel.Text += "O";
                 break;
 
-                case 2:
+                case "Even":
                     serialport.Parity = Parity.Even;
                     connectionSettingRateToolStripStatusLabel.Text += "E";
                 break;
 
-                case 3:
+                case "Mark":
                     serialport.Parity = Parity.Mark;
                     connectionSettingRateToolStripStatusLabel.Text += "M";
                 break;
 
-                case 4:
+                case "Space":
                     serialport.Parity = Parity.Space;
                     connectionSettingRateToolStripStatusLabel.Text += "S";
                 break;
@@ -192,6 +192,7 @@ namespace port_listener {
             serialport.WriteTimeout = 500;
 
             serialport.DataReceived += new SerialDataReceivedEventHandler( DataReceivedHandler );
+            serialport.Encoding = Encoding.GetEncoding( "Windows-1252" );
 
             serialport.Open();
 
@@ -230,17 +231,21 @@ namespace port_listener {
 
         private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e ) {
             SerialPort sp = (SerialPort)sender;
-            string data = sp.ReadExisting();
+
+            byte[ ] data = new byte[ sp.BytesToRead ];
+            if( sp.BytesToRead > 0 ) {
+                sp.Read( data, 0, sp.BytesToRead );
+            }
 
             ParseReadData( data );
         }
 
-        private void ParseReadData( string data ) {
+        private void ParseReadData( byte[] data ) {
             if(hbSerialData.InvokeRequired ) {
                 hbSerialData.BeginInvoke( (MethodInvoker)delegate () { ParseReadData( data ); } );
             } else {
                 log_data += data;
-                dynamicByteProvider.InsertBytes( dynamicByteProvider.Length, Encoding.ASCII.GetBytes( data ) );
+                dynamicByteProvider.InsertBytes( dynamicByteProvider.Length, data );
 
                 if( cbAuto.Checked && serialport.BaudRate == 300 ) {
                     MatchCollection mcReadoutLines = Regex.Matches(log_data, "\x06([0-9]{3})\r\n");
@@ -307,7 +312,33 @@ namespace port_listener {
             if( saveFileDialog.ShowDialog() == DialogResult.OK ) {
                 StreamWriter serialLog = new StreamWriter(saveFileDialog.FileName);
 
-                serialLog.Write( System.Text.Encoding.ASCII.GetString( ( ( DynamicByteProvider )hbSerialData.ByteProvider ).Bytes.ToArray() ) );
+                serialLog.Write( log_data );
+                serialLog.Close();
+            }
+        }
+
+        private void BtnSaveHex_Click( object sender, EventArgs e ) {
+            SaveFileDialog saveFileDialog = new SaveFileDialog() {
+                OverwritePrompt = true,
+                AddExtension = true,
+                DefaultExt = ".txt",
+                Filter = "Text Files|*.txt"
+            };
+
+            if( saveFileDialog.ShowDialog() == DialogResult.OK ) {
+                StreamWriter serialLog = new StreamWriter(saveFileDialog.FileName);
+
+                char[] data = log_data.ToCharArray();
+                string save = string.Empty;
+
+                for( int i = 0; i < data.Length; i++ ) {
+                    if( i != 0 && i % nudBytePerLine.Value == 0 ) {
+                        save += "\r\n";
+                    }
+                    save += String.Format( "0x{0:X2}", Convert.ToInt32( data[ i ] ) ) + " ";
+                }
+
+                serialLog.Write( save.Substring(0, save.Length - 1 ));
                 serialLog.Close();
             }
         }

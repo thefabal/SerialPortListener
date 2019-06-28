@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.label9 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnStop = new System.Windows.Forms.Button();
@@ -46,7 +47,7 @@
             this.cbDataBit = new System.Windows.Forms.ComboBox();
             this.cbBaudRate = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.btnSave = new System.Windows.Forms.Button();
+            this.btnSaveRaw = new System.Windows.Forms.Button();
             this.nudGroupSize = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
             this.nudBytePerLine = new System.Windows.Forms.NumericUpDown();
@@ -57,6 +58,7 @@
             this.fileSizeToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.connectionSettingRateToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.baudRateToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.btnSaveHex = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.gbRTS.SuspendLayout();
@@ -340,7 +342,8 @@
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox2.Controls.Add(this.btnSave);
+            this.groupBox2.Controls.Add(this.btnSaveHex);
+            this.groupBox2.Controls.Add(this.btnSaveRaw);
             this.groupBox2.Controls.Add(this.nudGroupSize);
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.nudBytePerLine);
@@ -354,16 +357,16 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Output";
             // 
-            // btnSave
+            // btnSaveRaw
             // 
-            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.Location = new System.Drawing.Point(363, 365);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(133, 23);
-            this.btnSave.TabIndex = 54;
-            this.btnSave.Text = "Save";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.BtnSave_Click);
+            this.btnSaveRaw.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSaveRaw.Location = new System.Drawing.Point(363, 365);
+            this.btnSaveRaw.Name = "btnSaveRaw";
+            this.btnSaveRaw.Size = new System.Drawing.Size(133, 23);
+            this.btnSaveRaw.TabIndex = 54;
+            this.btnSaveRaw.Text = "Save Raw";
+            this.btnSaveRaw.UseVisualStyleBackColor = true;
+            this.btnSaveRaw.Click += new System.EventHandler(this.BtnSave_Click);
             // 
             // nudGroupSize
             // 
@@ -501,6 +504,17 @@
             this.baudRateToolStripStatusLabel.Name = "baudRateToolStripStatusLabel";
             this.baudRateToolStripStatusLabel.Size = new System.Drawing.Size(125, 17);
             // 
+            // btnSaveHex
+            // 
+            this.btnSaveHex.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSaveHex.Location = new System.Drawing.Point(224, 365);
+            this.btnSaveHex.Name = "btnSaveHex";
+            this.btnSaveHex.Size = new System.Drawing.Size(133, 23);
+            this.btnSaveHex.TabIndex = 55;
+            this.btnSaveHex.Text = "Save Hex";
+            this.btnSaveHex.UseVisualStyleBackColor = true;
+            this.btnSaveHex.Click += new System.EventHandler(this.BtnSaveHex_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -510,6 +524,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.groupBox2);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Serial Port Listener";
@@ -565,9 +580,10 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel fileSizeToolStripStatusLabel;
-        private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Button btnSaveRaw;
         private System.Windows.Forms.ToolStripStatusLabel connectionSettingRateToolStripStatusLabel;
         private System.Windows.Forms.ToolStripStatusLabel baudRateToolStripStatusLabel;
+        private System.Windows.Forms.Button btnSaveHex;
     }
 }
 
