@@ -328,14 +328,14 @@ namespace port_listener {
             if( saveFileDialog.ShowDialog() == DialogResult.OK ) {
                 StreamWriter serialLog = new StreamWriter(saveFileDialog.FileName);
 
-                char[] data = log_data.ToCharArray();
+                byte[] data = dynamicByteProvider.Bytes.ToArray(); //log_data.ToCharArray();
                 string save = string.Empty;
 
                 for( int i = 0; i < data.Length; i++ ) {
                     if( i != 0 && i % nudBytePerLine.Value == 0 ) {
                         save += "\r\n";
                     }
-                    save += String.Format( "0x{0:X2}", Convert.ToInt32( data[ i ] ) ) + " ";
+                    save += String.Format( "0x{0:X2}", data[ i ] ) + " ";
                 }
 
                 serialLog.Write( save.Substring(0, save.Length - 1 ));
