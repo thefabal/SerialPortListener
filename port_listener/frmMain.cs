@@ -19,6 +19,7 @@ namespace port_listener {
         private string log_data = string.Empty;
         private SerialPort serialport;
         private readonly DynamicByteProvider dynamicByteProvider = new DynamicByteProvider( new byte[] { } );
+        private readonly csettings settings = new csettings();
 
         public frmMain() {
             InitializeComponent();
@@ -27,10 +28,29 @@ namespace port_listener {
 
             getAvailablePorts();
 
-            cbBaudRate.SelectedIndex = 0;
-            cbDataBit.SelectedIndex = 2;
-            cbParity.SelectedIndex = 2;
-            cbStopBit.SelectedIndex = 1;
+            settings.Get();
+            cbAuto.Checked = settings.auto_baud_switch;
+            for(int i = 0; i < cbPortName.Items.Count; i++ ) {
+                if( cbPortName.Items[i].ToString() == settings.serial_port_name ) {
+                    cbPortName.SelectedIndex = i;
+                }
+            }
+            cbBaudRate.SelectedIndex = cbBaudRate.Items.IndexOf( settings.baud_rate );
+            cbDataBit.SelectedIndex = cbDataBit.Items.IndexOf( settings.data_bit );
+            cbParity.SelectedIndex = cbParity.Items.IndexOf( settings.parity );
+            cbStopBit.SelectedIndex = cbStopBit.Items.IndexOf( settings.stop_bit );
+            
+            if( settings.dtr ) {
+                rbDTROn.Checked = true;
+            } else {
+                rbDTROff.Checked = true;
+            }
+
+            if( settings.rts ) {
+                rbRTSOn.Checked = true;
+            } else {
+                rbRTSOff.Checked = true;
+            }
 
             if( cbPortName.Items.Count == 0 ) {
                 btnListen.Enabled = false;
@@ -42,7 +62,7 @@ namespace port_listener {
                 rbDTROn.Enabled = false;
                 rbRTSOff.Enabled = false;
                 rbRTSOn.Enabled = false;
-            } else {
+            } else if( cbPortName.SelectedIndex == -1 ) {
                 cbPortName.SelectedIndex = 0;
             }
 
@@ -57,6 +77,19 @@ namespace port_listener {
             dynamicByteProvider.LengthChanged += new EventHandler( byteProvider_LengthChanged );
 
             nudGroupSize.Maximum = nudBytePerLine.Value;
+        }
+
+        private void FrmMain_FormClosing( object sender, FormClosingEventArgs e ) {
+            settings.auto_baud_switch = cbAuto.Checked;
+            settings.serial_port_name = cbPortName.SelectedItem.ToString();
+            settings.baud_rate = cbBaudRate.SelectedItem.ToString();
+            settings.data_bit = cbDataBit.SelectedItem.ToString();
+            settings.parity = cbParity.SelectedItem.ToString();
+            settings.stop_bit = cbStopBit.SelectedItem.ToString();
+            settings.dtr = rbDTROn.Checked;
+            settings.rts = rbRTSOn.Checked;
+
+            settings.Save();
         }
 
         void byteProvider_Changed( object sender, EventArgs e ) {
@@ -276,10 +309,6 @@ namespace port_listener {
             dynamicByteProvider.DeleteBytes( 0, dynamicByteProvider.Length );
         }
 
-        void RTBGotFocus( object sender, System.EventArgs e ) {
-            SendKeys.Send( "{tab}" );
-        }
-
         void getAvailablePorts() {
             try {
                 using ( ManagementObjectSearcher searcher = new ManagementObjectSearcher( "root\\CIMV2", "SELECT * FROM Win32_PnPEntity WHERE Caption LIKE '%(COM%'" ) ) {
@@ -341,6 +370,49 @@ namespace port_listener {
                 serialLog.Write( save.Substring(0, save.Length - 1 ));
                 serialLog.Close();
             }
+        }
+    }
+
+    public class csettings {
+        public bool auto_baud_switch = true;
+        public bool dtr = true;
+        public bool rts = true;
+
+        public string log_path = string.Empty;
+        public string serial_port_name = string.Empty;
+        public string baud_rate = string.Empty;
+        public string data_bit = string.Empty;
+        public string parity = string.Empty;
+        public string stop_bit = string.Empty;
+
+        public bool Get() {
+            auto_baud_switch = Properties.Settings.Default.auto_baud_switch;
+            dtr = Properties.Settings.Default.dtr;
+            rts = Properties.Settings.Default.rts;
+
+            serial_port_name = Properties.Settings.Default.serial_port_name;
+            baud_rate = Properties.Settings.Default.baud_rate;
+            data_bit = Properties.Settings.Default.data_bit;
+            parity = Properties.Settings.Default.parity;
+            stop_bit = Properties.Settings.Default.stop_bit;
+
+            log_path = AppDomain.CurrentDomain.BaseDirectory + "log\\";
+
+            return true;
+        }
+
+        public void Save() {
+            Properties.Settings.Default.auto_baud_switch = auto_baud_switch;
+            Properties.Settings.Default.dtr = dtr;
+            Properties.Settings.Default.rts = rts;
+
+            Properties.Settings.Default.serial_port_name = serial_port_name;
+            Properties.Settings.Default.baud_rate = baud_rate;
+            Properties.Settings.Default.data_bit = data_bit;
+            Properties.Settings.Default.parity = parity;
+            Properties.Settings.Default.stop_bit = stop_bit;
+
+            Properties.Settings.Default.Save();
         }
     }
 

@@ -47,6 +47,7 @@
             this.cbDataBit = new System.Windows.Forms.ComboBox();
             this.cbBaudRate = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnSaveHex = new System.Windows.Forms.Button();
             this.btnSaveRaw = new System.Windows.Forms.Button();
             this.nudGroupSize = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
@@ -58,7 +59,6 @@
             this.fileSizeToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.connectionSettingRateToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.baudRateToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.btnSaveHex = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.gbRTS.SuspendLayout();
@@ -357,6 +357,17 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Output";
             // 
+            // btnSaveHex
+            // 
+            this.btnSaveHex.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSaveHex.Location = new System.Drawing.Point(224, 365);
+            this.btnSaveHex.Name = "btnSaveHex";
+            this.btnSaveHex.Size = new System.Drawing.Size(133, 23);
+            this.btnSaveHex.TabIndex = 55;
+            this.btnSaveHex.Text = "Save Hex";
+            this.btnSaveHex.UseVisualStyleBackColor = true;
+            this.btnSaveHex.Click += new System.EventHandler(this.BtnSaveHex_Click);
+            // 
             // btnSaveRaw
             // 
             this.btnSaveRaw.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -504,17 +515,6 @@
             this.baudRateToolStripStatusLabel.Name = "baudRateToolStripStatusLabel";
             this.baudRateToolStripStatusLabel.Size = new System.Drawing.Size(125, 17);
             // 
-            // btnSaveHex
-            // 
-            this.btnSaveHex.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSaveHex.Location = new System.Drawing.Point(224, 365);
-            this.btnSaveHex.Name = "btnSaveHex";
-            this.btnSaveHex.Size = new System.Drawing.Size(133, 23);
-            this.btnSaveHex.TabIndex = 55;
-            this.btnSaveHex.Text = "Save Hex";
-            this.btnSaveHex.UseVisualStyleBackColor = true;
-            this.btnSaveHex.Click += new System.EventHandler(this.BtnSaveHex_Click);
-            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -528,6 +528,7 @@
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Serial Port Listener";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMain_FormClosing);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
