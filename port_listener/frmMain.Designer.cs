@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.label9 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -54,11 +55,18 @@
             this.nudBytePerLine = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.hbSerialData = new Be.Windows.Forms.HexBox();
+            this.cmsHexBox = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.saveAsHexToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAsRawToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyAsHexToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyAsTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnClear = new System.Windows.Forms.Button();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.fileSizeToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.connectionSettingRateToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.baudRateToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.copyAsBinaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.gbRTS.SuspendLayout();
@@ -66,6 +74,7 @@
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudGroupSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudBytePerLine)).BeginInit();
+            this.cmsHexBox.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -463,10 +472,12 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.hbSerialData.ColumnInfoVisible = true;
+            this.hbSerialData.ContextMenuStrip = this.cmsHexBox;
             this.hbSerialData.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.hbSerialData.GroupSeparatorVisible = true;
             this.hbSerialData.Location = new System.Drawing.Point(6, 19);
             this.hbSerialData.Name = "hbSerialData";
+            this.hbSerialData.ReadOnly = true;
             this.hbSerialData.ShadowSelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(60)))), ((int)(((byte)(188)))), ((int)(((byte)(255)))));
             this.hbSerialData.Size = new System.Drawing.Size(492, 338);
             this.hbSerialData.StringViewVisible = true;
@@ -474,12 +485,59 @@
             this.hbSerialData.UseFixedBytesPerLine = true;
             this.hbSerialData.VScrollBarVisible = true;
             // 
+            // cmsHexBox
+            // 
+            this.cmsHexBox.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.saveAsHexToolStripMenuItem,
+            this.saveAsRawToolStripMenuItem,
+            this.copyAsHexToolStripMenuItem,
+            this.copyAsBinaryToolStripMenuItem,
+            this.copyAsTextToolStripMenuItem,
+            this.clearToolStripMenuItem});
+            this.cmsHexBox.Name = "cmsHexBox";
+            this.cmsHexBox.Size = new System.Drawing.Size(181, 158);
+            // 
+            // saveAsHexToolStripMenuItem
+            // 
+            this.saveAsHexToolStripMenuItem.Name = "saveAsHexToolStripMenuItem";
+            this.saveAsHexToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveAsHexToolStripMenuItem.Text = "Save as Hex";
+            this.saveAsHexToolStripMenuItem.Click += new System.EventHandler(this.BtnSaveHex_Click);
+            // 
+            // saveAsRawToolStripMenuItem
+            // 
+            this.saveAsRawToolStripMenuItem.Name = "saveAsRawToolStripMenuItem";
+            this.saveAsRawToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveAsRawToolStripMenuItem.Text = "Save as Text";
+            this.saveAsRawToolStripMenuItem.Click += new System.EventHandler(this.BtnSave_Click);
+            // 
+            // copyAsHexToolStripMenuItem
+            // 
+            this.copyAsHexToolStripMenuItem.Name = "copyAsHexToolStripMenuItem";
+            this.copyAsHexToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.copyAsHexToolStripMenuItem.Text = "Copy as Hex";
+            this.copyAsHexToolStripMenuItem.Click += new System.EventHandler(this.CopyAsHexToolStripMenuItem_Click);
+            // 
+            // copyAsTextToolStripMenuItem
+            // 
+            this.copyAsTextToolStripMenuItem.Name = "copyAsTextToolStripMenuItem";
+            this.copyAsTextToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.copyAsTextToolStripMenuItem.Text = "Copy as Text";
+            this.copyAsTextToolStripMenuItem.Click += new System.EventHandler(this.CopyAsTextToolStripMenuItem_Click);
+            // 
+            // clearToolStripMenuItem
+            // 
+            this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
+            this.clearToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.clearToolStripMenuItem.Text = "Clear";
+            this.clearToolStripMenuItem.Click += new System.EventHandler(this.btnClear_Click);
+            // 
             // btnClear
             // 
             this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClear.Location = new System.Drawing.Point(363, 392);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(135, 23);
+            this.btnClear.Size = new System.Drawing.Size(133, 23);
             this.btnClear.TabIndex = 47;
             this.btnClear.Text = "Clear";
             this.btnClear.UseVisualStyleBackColor = true;
@@ -515,6 +573,13 @@
             this.baudRateToolStripStatusLabel.Name = "baudRateToolStripStatusLabel";
             this.baudRateToolStripStatusLabel.Size = new System.Drawing.Size(125, 17);
             // 
+            // copyAsBinaryToolStripMenuItem
+            // 
+            this.copyAsBinaryToolStripMenuItem.Name = "copyAsBinaryToolStripMenuItem";
+            this.copyAsBinaryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.copyAsBinaryToolStripMenuItem.Text = "Copy as Binary";
+            this.copyAsBinaryToolStripMenuItem.Click += new System.EventHandler(this.CopyAsBinaryToolStripMenuItem_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -541,6 +606,7 @@
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudGroupSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudBytePerLine)).EndInit();
+            this.cmsHexBox.ResumeLayout(false);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
@@ -585,6 +651,13 @@
         private System.Windows.Forms.ToolStripStatusLabel connectionSettingRateToolStripStatusLabel;
         private System.Windows.Forms.ToolStripStatusLabel baudRateToolStripStatusLabel;
         private System.Windows.Forms.Button btnSaveHex;
+        private System.Windows.Forms.ContextMenuStrip cmsHexBox;
+        private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveAsHexToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveAsRawToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem copyAsHexToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem copyAsTextToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem copyAsBinaryToolStripMenuItem;
     }
 }
 

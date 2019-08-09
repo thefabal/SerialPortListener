@@ -118,5 +118,29 @@ namespace port_listener.Properties {
                 this["rts"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("16")]
+        public int bytes_per_line {
+            get {
+                return ((int)(this["bytes_per_line"]));
+            }
+            set {
+                this["bytes_per_line"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("4")]
+        public int group_size {
+            get {
+                return ((int)(this["group_size"]));
+            }
+            set {
+                this["group_size"] = value;
+            }
+        }
     }
 }

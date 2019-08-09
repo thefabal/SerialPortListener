@@ -73,6 +73,9 @@ namespace port_listener {
             hbSerialData.BackColor = Color.White;
             hbSerialData.ByteProvider = dynamicByteProvider;
 
+            nudBytePerLine.Value = settings.bytes_per_line;
+            nudGroupSize.Value = settings.group_size;
+
             dynamicByteProvider.Changed += new EventHandler( byteProvider_Changed );
             dynamicByteProvider.LengthChanged += new EventHandler( byteProvider_LengthChanged );
 
@@ -81,13 +84,17 @@ namespace port_listener {
 
         private void FrmMain_FormClosing( object sender, FormClosingEventArgs e ) {
             settings.auto_baud_switch = cbAuto.Checked;
+            settings.dtr = rbDTROn.Checked;
+            settings.rts = rbRTSOn.Checked;
+
+            settings.bytes_per_line = Convert.ToInt32( nudBytePerLine.Value );
+            settings.group_size = Convert.ToInt32( nudGroupSize.Value );
+
             settings.serial_port_name = cbPortName.SelectedItem.ToString();
             settings.baud_rate = cbBaudRate.SelectedItem.ToString();
             settings.data_bit = cbDataBit.SelectedItem.ToString();
             settings.parity = cbParity.SelectedItem.ToString();
             settings.stop_bit = cbStopBit.SelectedItem.ToString();
-            settings.dtr = rbDTROn.Checked;
-            settings.rts = rbRTSOn.Checked;
 
             settings.Save();
         }
@@ -267,7 +274,7 @@ namespace port_listener {
 
             byte[ ] data = new byte[ sp.BytesToRead ];
             if( sp.BytesToRead > 0 ) {
-                sp.Read( data, 0, sp.BytesToRead );
+                sp.Read( data, 0, data.Length );
             }
 
             ParseReadData( data );
@@ -339,7 +346,7 @@ namespace port_listener {
             };
 
             if( saveFileDialog.ShowDialog() == DialogResult.OK ) {
-                StreamWriter serialLog = new StreamWriter(saveFileDialog.FileName);
+                StreamWriter serialLog = new StreamWriter( saveFileDialog.FileName );
 
                 serialLog.Write( log_data );
                 serialLog.Close();
@@ -357,7 +364,7 @@ namespace port_listener {
             if( saveFileDialog.ShowDialog() == DialogResult.OK ) {
                 StreamWriter serialLog = new StreamWriter(saveFileDialog.FileName);
 
-                byte[] data = dynamicByteProvider.Bytes.ToArray(); //log_data.ToCharArray();
+                byte[] data = dynamicByteProvider.Bytes.ToArray();
                 string save = string.Empty;
 
                 for( int i = 0; i < data.Length; i++ ) {
@@ -371,12 +378,51 @@ namespace port_listener {
                 serialLog.Close();
             }
         }
+
+        private void CopyAsHexToolStripMenuItem_Click( object sender, EventArgs e ) {
+            byte[] buf = new byte[hbSerialData.SelectionLength];
+
+            dynamicByteProvider.Bytes.CopyTo( Convert.ToInt32( hbSerialData.SelectionStart ), buf, 0, Convert.ToInt32( hbSerialData.SelectionLength ) );
+            string save = string.Empty;
+
+            for( int i = 0; i < buf.Length; i++ ) {
+                if( i != 0 && i % nudBytePerLine.Value == 0 ) {
+                    save += "\r\n";
+                }
+                save += String.Format( "0x{0:X2}", buf[ i ] ) + " ";
+            }
+
+            Clipboard.SetText( save );
+        }
+
+        private void CopyAsTextToolStripMenuItem_Click( object sender, EventArgs e ) {
+            hbSerialData.Copy();
+        }
+
+        private void CopyAsBinaryToolStripMenuItem_Click( object sender, EventArgs e ) {
+            byte[] buf = new byte[hbSerialData.SelectionLength];
+
+            dynamicByteProvider.Bytes.CopyTo( Convert.ToInt32( hbSerialData.SelectionStart ), buf, 0, Convert.ToInt32( hbSerialData.SelectionLength ) );
+            string save = string.Empty;
+
+            for( int i = 0; i < buf.Length; i++ ) {
+                if( i != 0 && i % nudBytePerLine.Value == 0 ) {
+                    save += "\r\n";
+                }
+                save += buf[ i ] + " ";
+            }
+
+            Clipboard.SetText( save );
+        }
     }
 
     public class csettings {
         public bool auto_baud_switch = true;
         public bool dtr = true;
         public bool rts = true;
+
+        public int bytes_per_line = 16;
+        public int group_size = 4;
 
         public string log_path = string.Empty;
         public string serial_port_name = string.Empty;
@@ -389,6 +435,9 @@ namespace port_listener {
             auto_baud_switch = Properties.Settings.Default.auto_baud_switch;
             dtr = Properties.Settings.Default.dtr;
             rts = Properties.Settings.Default.rts;
+
+            bytes_per_line = Properties.Settings.Default.bytes_per_line;
+            group_size = Properties.Settings.Default.group_size;
 
             serial_port_name = Properties.Settings.Default.serial_port_name;
             baud_rate = Properties.Settings.Default.baud_rate;
@@ -405,6 +454,9 @@ namespace port_listener {
             Properties.Settings.Default.auto_baud_switch = auto_baud_switch;
             Properties.Settings.Default.dtr = dtr;
             Properties.Settings.Default.rts = rts;
+
+            Properties.Settings.Default.bytes_per_line = bytes_per_line;
+            Properties.Settings.Default.group_size = group_size;
 
             Properties.Settings.Default.serial_port_name = serial_port_name;
             Properties.Settings.Default.baud_rate = baud_rate;
