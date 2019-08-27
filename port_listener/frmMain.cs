@@ -314,6 +314,8 @@ namespace port_listener {
 
         private void btnClear_Click( object sender, EventArgs e ) {
             dynamicByteProvider.DeleteBytes( 0, dynamicByteProvider.Length );
+            hbSerialData.SelectionStart = 0;
+            hbSerialData.SelectionLength = 0;
         }
 
         void getAvailablePorts() {
