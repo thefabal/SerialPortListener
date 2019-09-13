@@ -59,6 +59,7 @@
             this.saveAsHexToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsRawToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyAsHexToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyAsBinaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyAsTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnClear = new System.Windows.Forms.Button();
@@ -66,7 +67,7 @@
             this.fileSizeToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.connectionSettingRateToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.baudRateToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.copyAsBinaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cbLeadingIdent = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.gbRTS.SuspendLayout();
@@ -351,6 +352,7 @@
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.cbLeadingIdent);
             this.groupBox2.Controls.Add(this.btnSaveHex);
             this.groupBox2.Controls.Add(this.btnSaveRaw);
             this.groupBox2.Controls.Add(this.nudGroupSize);
@@ -495,40 +497,47 @@
             this.copyAsTextToolStripMenuItem,
             this.clearToolStripMenuItem});
             this.cmsHexBox.Name = "cmsHexBox";
-            this.cmsHexBox.Size = new System.Drawing.Size(181, 158);
+            this.cmsHexBox.Size = new System.Drawing.Size(153, 136);
             // 
             // saveAsHexToolStripMenuItem
             // 
             this.saveAsHexToolStripMenuItem.Name = "saveAsHexToolStripMenuItem";
-            this.saveAsHexToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveAsHexToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveAsHexToolStripMenuItem.Text = "Save as Hex";
             this.saveAsHexToolStripMenuItem.Click += new System.EventHandler(this.BtnSaveHex_Click);
             // 
             // saveAsRawToolStripMenuItem
             // 
             this.saveAsRawToolStripMenuItem.Name = "saveAsRawToolStripMenuItem";
-            this.saveAsRawToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveAsRawToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveAsRawToolStripMenuItem.Text = "Save as Text";
             this.saveAsRawToolStripMenuItem.Click += new System.EventHandler(this.BtnSave_Click);
             // 
             // copyAsHexToolStripMenuItem
             // 
             this.copyAsHexToolStripMenuItem.Name = "copyAsHexToolStripMenuItem";
-            this.copyAsHexToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.copyAsHexToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.copyAsHexToolStripMenuItem.Text = "Copy as Hex";
             this.copyAsHexToolStripMenuItem.Click += new System.EventHandler(this.CopyAsHexToolStripMenuItem_Click);
+            // 
+            // copyAsBinaryToolStripMenuItem
+            // 
+            this.copyAsBinaryToolStripMenuItem.Name = "copyAsBinaryToolStripMenuItem";
+            this.copyAsBinaryToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.copyAsBinaryToolStripMenuItem.Text = "Copy as Binary";
+            this.copyAsBinaryToolStripMenuItem.Click += new System.EventHandler(this.CopyAsBinaryToolStripMenuItem_Click);
             // 
             // copyAsTextToolStripMenuItem
             // 
             this.copyAsTextToolStripMenuItem.Name = "copyAsTextToolStripMenuItem";
-            this.copyAsTextToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.copyAsTextToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.copyAsTextToolStripMenuItem.Text = "Copy as Text";
             this.copyAsTextToolStripMenuItem.Click += new System.EventHandler(this.CopyAsTextToolStripMenuItem_Click);
             // 
             // clearToolStripMenuItem
             // 
             this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
-            this.clearToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.clearToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.clearToolStripMenuItem.Text = "Clear";
             this.clearToolStripMenuItem.Click += new System.EventHandler(this.btnClear_Click);
             // 
@@ -573,12 +582,15 @@
             this.baudRateToolStripStatusLabel.Name = "baudRateToolStripStatusLabel";
             this.baudRateToolStripStatusLabel.Size = new System.Drawing.Size(125, 17);
             // 
-            // copyAsBinaryToolStripMenuItem
+            // cbLeadingIdent
             // 
-            this.copyAsBinaryToolStripMenuItem.Name = "copyAsBinaryToolStripMenuItem";
-            this.copyAsBinaryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.copyAsBinaryToolStripMenuItem.Text = "Copy as Binary";
-            this.copyAsBinaryToolStripMenuItem.Click += new System.EventHandler(this.CopyAsBinaryToolStripMenuItem_Click);
+            this.cbLeadingIdent.AutoSize = true;
+            this.cbLeadingIdent.Location = new System.Drawing.Point(224, 396);
+            this.cbLeadingIdent.Name = "cbLeadingIdent";
+            this.cbLeadingIdent.Size = new System.Drawing.Size(130, 17);
+            this.cbLeadingIdent.TabIndex = 56;
+            this.cbLeadingIdent.Text = "with Leader Hex Ident";
+            this.cbLeadingIdent.UseVisualStyleBackColor = true;
             // 
             // frmMain
             // 
@@ -658,6 +670,7 @@
         private System.Windows.Forms.ToolStripMenuItem copyAsHexToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyAsTextToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyAsBinaryToolStripMenuItem;
+        private System.Windows.Forms.CheckBox cbLeadingIdent;
     }
 }
 

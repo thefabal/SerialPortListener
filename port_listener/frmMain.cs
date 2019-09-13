@@ -391,7 +391,7 @@ namespace port_listener {
                 if( i != 0 && i % nudBytePerLine.Value == 0 ) {
                     save += "\r\n";
                 }
-                save += String.Format( "0x{0:X2}", buf[ i ] ) + " ";
+                save += String.Format( ( cbLeadingIdent.Checked ) ? ( "0x{0:X2}" ) : ( "{0:X2}" ), buf[ i ] ) + " ";
             }
 
             Clipboard.SetText( save );
