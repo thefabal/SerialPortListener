@@ -1,5 +1,5 @@
 ﻿namespace port_listener {
-    partial class frmMain {
+    partial class FrmMain {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -24,9 +24,12 @@
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.label9 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.cbResetBaud = new System.Windows.Forms.ComboBox();
             this.btnStop = new System.Windows.Forms.Button();
             this.cbAuto = new System.Windows.Forms.CheckBox();
             this.btnListen = new System.Windows.Forms.Button();
@@ -48,6 +51,7 @@
             this.cbDataBit = new System.Windows.Forms.ComboBox();
             this.cbBaudRate = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.cbLeadingIdent = new System.Windows.Forms.CheckBox();
             this.btnSaveHex = new System.Windows.Forms.Button();
             this.btnSaveRaw = new System.Windows.Forms.Button();
             this.nudGroupSize = new System.Windows.Forms.NumericUpDown();
@@ -67,7 +71,6 @@
             this.fileSizeToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.connectionSettingRateToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.baudRateToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.cbLeadingIdent = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.gbRTS.SuspendLayout();
@@ -85,21 +88,59 @@
             this.label9.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label9.Location = new System.Drawing.Point(0, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(664, 39);
+            this.label9.Size = new System.Drawing.Size(705, 39);
             this.label9.TabIndex = 42;
             this.label9.Text = "Serial Port Listener";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.label10);
+            this.panel1.Controls.Add(this.label8);
+            this.panel1.Controls.Add(this.cbResetBaud);
             this.panel1.Controls.Add(this.btnStop);
             this.panel1.Controls.Add(this.cbAuto);
             this.panel1.Controls.Add(this.btnListen);
             this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Location = new System.Drawing.Point(0, 39);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(150, 422);
+            this.panel1.Size = new System.Drawing.Size(150, 480);
             this.panel1.TabIndex = 44;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(101, 88);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(46, 13);
+            this.label10.TabIndex = 50;
+            this.label10.Text = "milisecs.";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(15, 69);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(117, 13);
+            this.label8.TabIndex = 49;
+            this.label8.Text = "Back to Initial Baudrate";
+            // 
+            // cbResetBaud
+            // 
+            this.cbResetBaud.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbResetBaud.FormattingEnabled = true;
+            this.cbResetBaud.Items.AddRange(new object[] {
+            "1000",
+            "5000",
+            "10000",
+            "15000",
+            "30000",
+            "60000",
+            "120000"});
+            this.cbResetBaud.Location = new System.Drawing.Point(12, 85);
+            this.cbResetBaud.Name = "cbResetBaud";
+            this.cbResetBaud.Size = new System.Drawing.Size(83, 21);
+            this.cbResetBaud.TabIndex = 48;
             // 
             // btnStop
             // 
@@ -147,7 +188,7 @@
             this.groupBox1.Controls.Add(this.cbParity);
             this.groupBox1.Controls.Add(this.cbDataBit);
             this.groupBox1.Controls.Add(this.cbBaudRate);
-            this.groupBox1.Location = new System.Drawing.Point(3, 55);
+            this.groupBox1.Location = new System.Drawing.Point(3, 112);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(144, 363);
             this.groupBox1.TabIndex = 44;
@@ -363,15 +404,26 @@
             this.groupBox2.Controls.Add(this.btnClear);
             this.groupBox2.Location = new System.Drawing.Point(156, 39);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(504, 422);
+            this.groupBox2.Size = new System.Drawing.Size(545, 492);
             this.groupBox2.TabIndex = 48;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Output";
             // 
+            // cbLeadingIdent
+            // 
+            this.cbLeadingIdent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbLeadingIdent.AutoSize = true;
+            this.cbLeadingIdent.Location = new System.Drawing.Point(265, 467);
+            this.cbLeadingIdent.Name = "cbLeadingIdent";
+            this.cbLeadingIdent.Size = new System.Drawing.Size(130, 17);
+            this.cbLeadingIdent.TabIndex = 56;
+            this.cbLeadingIdent.Text = "with leading Hex ident";
+            this.cbLeadingIdent.UseVisualStyleBackColor = true;
+            // 
             // btnSaveHex
             // 
             this.btnSaveHex.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSaveHex.Location = new System.Drawing.Point(224, 365);
+            this.btnSaveHex.Location = new System.Drawing.Point(265, 436);
             this.btnSaveHex.Name = "btnSaveHex";
             this.btnSaveHex.Size = new System.Drawing.Size(133, 23);
             this.btnSaveHex.TabIndex = 55;
@@ -382,7 +434,7 @@
             // btnSaveRaw
             // 
             this.btnSaveRaw.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSaveRaw.Location = new System.Drawing.Point(363, 365);
+            this.btnSaveRaw.Location = new System.Drawing.Point(404, 436);
             this.btnSaveRaw.Name = "btnSaveRaw";
             this.btnSaveRaw.Size = new System.Drawing.Size(133, 23);
             this.btnSaveRaw.TabIndex = 54;
@@ -398,7 +450,7 @@
             0,
             0,
             0});
-            this.nudGroupSize.Location = new System.Drawing.Point(88, 395);
+            this.nudGroupSize.Location = new System.Drawing.Point(88, 466);
             this.nudGroupSize.Maximum = new decimal(new int[] {
             32,
             0,
@@ -423,7 +475,7 @@
             // 
             this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 397);
+            this.label7.Location = new System.Drawing.Point(6, 468);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(63, 13);
             this.label7.TabIndex = 52;
@@ -437,7 +489,7 @@
             0,
             0,
             0});
-            this.nudBytePerLine.Location = new System.Drawing.Point(88, 368);
+            this.nudBytePerLine.Location = new System.Drawing.Point(88, 439);
             this.nudBytePerLine.Maximum = new decimal(new int[] {
             32,
             0,
@@ -462,7 +514,7 @@
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 370);
+            this.label3.Location = new System.Drawing.Point(6, 441);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(76, 13);
             this.label3.TabIndex = 50;
@@ -481,7 +533,7 @@
             this.hbSerialData.Name = "hbSerialData";
             this.hbSerialData.ReadOnly = true;
             this.hbSerialData.ShadowSelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(60)))), ((int)(((byte)(188)))), ((int)(((byte)(255)))));
-            this.hbSerialData.Size = new System.Drawing.Size(492, 338);
+            this.hbSerialData.Size = new System.Drawing.Size(531, 409);
             this.hbSerialData.StringViewVisible = true;
             this.hbSerialData.TabIndex = 48;
             this.hbSerialData.UseFixedBytesPerLine = true;
@@ -544,7 +596,7 @@
             // btnClear
             // 
             this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClear.Location = new System.Drawing.Point(363, 392);
+            this.btnClear.Location = new System.Drawing.Point(404, 463);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(133, 23);
             this.btnClear.TabIndex = 47;
@@ -558,9 +610,9 @@
             this.fileSizeToolStripStatusLabel,
             this.connectionSettingRateToolStripStatusLabel,
             this.baudRateToolStripStatusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 462);
+            this.statusStrip.Location = new System.Drawing.Point(0, 532);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(664, 22);
+            this.statusStrip.Size = new System.Drawing.Size(705, 22);
             this.statusStrip.TabIndex = 49;
             this.statusStrip.Text = "statusStrip1";
             // 
@@ -582,27 +634,17 @@
             this.baudRateToolStripStatusLabel.Name = "baudRateToolStripStatusLabel";
             this.baudRateToolStripStatusLabel.Size = new System.Drawing.Size(125, 17);
             // 
-            // cbLeadingIdent
-            // 
-            this.cbLeadingIdent.AutoSize = true;
-            this.cbLeadingIdent.Location = new System.Drawing.Point(224, 396);
-            this.cbLeadingIdent.Name = "cbLeadingIdent";
-            this.cbLeadingIdent.Size = new System.Drawing.Size(130, 17);
-            this.cbLeadingIdent.TabIndex = 56;
-            this.cbLeadingIdent.Text = "with Leader Hex Ident";
-            this.cbLeadingIdent.UseVisualStyleBackColor = true;
-            // 
-            // frmMain
+            // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(664, 484);
+            this.ClientSize = new System.Drawing.Size(705, 554);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.groupBox2);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "frmMain";
+            this.Name = "FrmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Serial Port Listener";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMain_FormClosing);
@@ -671,6 +713,9 @@
         private System.Windows.Forms.ToolStripMenuItem copyAsTextToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyAsBinaryToolStripMenuItem;
         private System.Windows.Forms.CheckBox cbLeadingIdent;
+        private System.Windows.Forms.ComboBox cbResetBaud;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label10;
     }
 }
 

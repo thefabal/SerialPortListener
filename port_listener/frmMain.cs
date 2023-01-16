@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
@@ -12,16 +8,18 @@ using Be.Windows.Forms;
 
 using System.Management;
 using System.Text.RegularExpressions;
-using System.Globalization;
 
 namespace port_listener {
-    public partial class frmMain: Form {
-        private string log_data = string.Empty;
-        private SerialPort serialport;
-        private readonly DynamicByteProvider dynamicByteProvider = new DynamicByteProvider( new byte[] { } );
-        private readonly csettings settings = new csettings();
+    public partial class FrmMain: Form {
+        private string loggedData = string.Empty;
+        private System.IO.Ports.SerialPort serialport;
+        private bool baudSwitched = false;
+        
+        private readonly Timer timer = new Timer();
+        private readonly DynamicByteProvider dynamicByteProvider = new DynamicByteProvider( new byte[] { } );        
+        private readonly Settings settings = new Settings();
 
-        public frmMain() {
+        public FrmMain() {
             InitializeComponent();
 
             this.MinimumSize = this.Size;
@@ -39,6 +37,10 @@ namespace port_listener {
             cbDataBit.SelectedIndex = cbDataBit.Items.IndexOf( settings.data_bit );
             cbParity.SelectedIndex = cbParity.Items.IndexOf( settings.parity );
             cbStopBit.SelectedIndex = cbStopBit.Items.IndexOf( settings.stop_bit );
+            cbResetBaud.SelectedIndex = cbResetBaud.Items.IndexOf( settings.reset_baud.ToString() );
+            if( cbResetBaud.SelectedIndex != -1 ) {
+                cbResetBaud.SelectedIndex = 0;
+            }
             
             if( settings.dtr ) {
                 rbDTROn.Checked = true;
@@ -65,6 +67,8 @@ namespace port_listener {
             } else if( cbPortName.SelectedIndex == -1 ) {
                 cbPortName.SelectedIndex = 0;
             }
+            
+            timer.Tick += new EventHandler( timerTick );
 
             btnStop.Enabled = false;
 
@@ -95,6 +99,7 @@ namespace port_listener {
             settings.data_bit = cbDataBit.SelectedItem.ToString();
             settings.parity = cbParity.SelectedItem.ToString();
             settings.stop_bit = cbStopBit.SelectedItem.ToString();
+            settings.reset_baud = Convert.ToInt32( cbResetBaud.SelectedItem.ToString() );
 
             settings.Save();
         }
@@ -160,14 +165,16 @@ namespace port_listener {
         }
 
         private void btnListen_Click( object sender, EventArgs e ) {
-            log_data = string.Empty;
+            loggedData = string.Empty;
 
             if ( cbPortName.SelectedIndex == -1 ) {
                 return;
             }
 
-            serialport = new SerialPort {
-                PortName = ( (serial_port)cbPortName.SelectedItem ).port_id,
+            baudSwitched = false;
+
+            serialport = new System.IO.Ports.SerialPort {
+                PortName = ( (SerialPort)cbPortName.SelectedItem ).port_id,
                 BaudRate = Convert.ToInt32( cbBaudRate.SelectedItem ),
                 DataBits = Convert.ToInt32( cbDataBit.SelectedItem ),
                 Handshake = Handshake.None,
@@ -235,6 +242,7 @@ namespace port_listener {
             serialport.Encoding = Encoding.GetEncoding( "Windows-1252" );
 
             serialport.Open();
+            timer.Interval = Convert.ToInt32( cbResetBaud.SelectedItem.ToString() );
 
             cbAuto.Enabled = false;
             cbPortName.Enabled = false;
@@ -242,6 +250,7 @@ namespace port_listener {
             cbDataBit.Enabled = false;
             cbParity.Enabled = false;
             cbStopBit.Enabled = false;
+            cbResetBaud.Enabled = false;
             btnListen.Enabled = false;
             btnStop.Enabled = true;
             rbDTROff.Enabled = false;
@@ -254,6 +263,7 @@ namespace port_listener {
 
         private void btnStop_Click( object sender, EventArgs e ) {
             serialport.Close();
+            timer.Stop();
 
             cbAuto.Enabled = true;
             cbPortName.Enabled = true;
@@ -261,6 +271,7 @@ namespace port_listener {
             cbDataBit.Enabled = true;
             cbParity.Enabled = true;
             cbStopBit.Enabled = true;
+            cbResetBaud.Enabled = true;
             btnListen.Enabled = true;
             btnStop.Enabled = false;
             rbDTROff.Enabled = true;
@@ -270,7 +281,7 @@ namespace port_listener {
         }
 
         private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e ) {
-            SerialPort sp = (SerialPort)sender;
+            System.IO.Ports.SerialPort sp = (System.IO.Ports.SerialPort)sender;
 
             byte[ ] data = new byte[ sp.BytesToRead ];
             if( sp.BytesToRead > 0 ) {
@@ -280,15 +291,30 @@ namespace port_listener {
             ParseReadData( data );
         }
 
+        private void timerTick( object sender, EventArgs e ) {          
+            if( serialport.BaudRate != Convert.ToInt32( cbBaudRate.SelectedItem ) ) {
+                serialport.Close();
+
+                serialport.BaudRate = Convert.ToInt32( cbBaudRate.SelectedItem );
+                baudRateToolStripStatusLabel.Text = serialport.BaudRate.ToString() + "bps";
+                loggedData = string.Empty;
+
+                serialport.Open();
+                timer.Stop();
+
+                baudSwitched = false;
+            }
+        }
+
         private void ParseReadData( byte[] data ) {
             if(hbSerialData.InvokeRequired ) {
                 hbSerialData.BeginInvoke( (MethodInvoker)delegate () { ParseReadData( data ); } );
             } else {
-                log_data += data;
+                loggedData += Encoding.ASCII.GetString( data );
                 dynamicByteProvider.InsertBytes( dynamicByteProvider.Length, data );
 
-                if( cbAuto.Checked && serialport.BaudRate == 300 ) {
-                    MatchCollection mcReadoutLines = Regex.Matches(log_data, "\x06([0-9]{3})\r\n");
+                if( cbAuto.Checked && baudSwitched == false ) {
+                    MatchCollection mcReadoutLines = Regex.Matches( loggedData, "\x06([0-9]{3})\r\n" );
                     if ( mcReadoutLines.Count > 0 ) {
                         int baudrate = 0;
                         switch ( mcReadoutLines[ 0 ].Groups[ 1 ].Value.Substring( 1, 1 ) ) {
@@ -303,11 +329,21 @@ namespace port_listener {
                         }
 
                         if ( serialport.BaudRate != baudrate ) {
+                            serialport.Close();
                             serialport.BaudRate = baudrate;
+                            serialport.Open();
+                            timer.Start();
+
+                            baudSwitched = true;
 
                             baudRateToolStripStatusLabel.Text = serialport.BaudRate + "bps";
                         }
                     }
+                }
+
+                if( timer.Enabled ) {
+                    timer.Stop();
+                    timer.Start();
                 }
             }
         }
@@ -322,7 +358,7 @@ namespace port_listener {
             try {
                 using ( ManagementObjectSearcher searcher = new ManagementObjectSearcher( "root\\CIMV2", "SELECT * FROM Win32_PnPEntity WHERE Caption LIKE '%(COM%'" ) ) {
                     foreach ( ManagementObject s in searcher.Get() ) {
-                        cbPortName.Items.Add( new serial_port( s[ "Name" ].ToString() ) );
+                        cbPortName.Items.Add( new SerialPort( s[ "Name" ].ToString() ) );
                     }
                 }
             } catch {
@@ -350,7 +386,7 @@ namespace port_listener {
             if( saveFileDialog.ShowDialog() == DialogResult.OK ) {
                 StreamWriter serialLog = new StreamWriter( saveFileDialog.FileName );
 
-                serialLog.Write( log_data );
+                serialLog.Write( loggedData );
                 serialLog.Close();
             }
         }
@@ -418,13 +454,14 @@ namespace port_listener {
         }
     }
 
-    public class csettings {
+    public class Settings {
         public bool auto_baud_switch = true;
         public bool dtr = true;
         public bool rts = true;
 
         public int bytes_per_line = 16;
         public int group_size = 4;
+        public int reset_baud = 30;
 
         public string log_path = string.Empty;
         public string serial_port_name = string.Empty;
@@ -440,6 +477,7 @@ namespace port_listener {
 
             bytes_per_line = Properties.Settings.Default.bytes_per_line;
             group_size = Properties.Settings.Default.group_size;
+            reset_baud = Properties.Settings.Default.reset_baud;
 
             serial_port_name = Properties.Settings.Default.serial_port_name;
             baud_rate = Properties.Settings.Default.baud_rate;
@@ -459,6 +497,7 @@ namespace port_listener {
 
             Properties.Settings.Default.bytes_per_line = bytes_per_line;
             Properties.Settings.Default.group_size = group_size;
+            Properties.Settings.Default.reset_baud = reset_baud;
 
             Properties.Settings.Default.serial_port_name = serial_port_name;
             Properties.Settings.Default.baud_rate = baud_rate;
@@ -470,11 +509,11 @@ namespace port_listener {
         }
     }
 
-    public class serial_port {
+    public class SerialPort {
         public string port_name;
         public string port_id;
 
-        public serial_port(string port_name) {
+        public SerialPort(string port_name) {
             this.port_name = port_name;
             this.port_id = port_name.Substring( port_name.IndexOf("(COM") + 1, port_name.IndexOf(")") - port_name.IndexOf( "(COM" ) - 1 );
         }
