@@ -1,2 +1,2 @@
 # SerialPortListener
-Serial Port Listener
+Serial Port Listener for Electricity Meter Reading
